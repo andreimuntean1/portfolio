@@ -1,0 +1,60 @@
+[
+	{
+		"title": "bioRO",
+		"category": "web app",
+		"description": "bioRO is a startup where the buyers can see how the goods that the sellers are offering are produced, only by scanning a QR code.",
+		"links": {
+			"demo": "https://bioro.ro",
+			"figma": "https://www.figma.com/file/pdr5GpclDIoqT5257OxceV/BioRO?type=design&t=dxKagJXP43ElQrZB-6",
+			"github": "https://github.com/andreimuntean1/bioro"
+		}
+	},
+	{
+		"title": "pearOS",
+		"category": "landing page",
+		"description": "A landing page for a Linux distro that focuses on UI and UX, offering an Mac-like experience to the user.",
+		"links": {
+			"demo": "https://pearos.xyz",
+			"figma": "https://www.figma.com/file/boJFjWOSeA0PKx182NGXBg/pearOS-redesign?type=design&t=dxKagJXP43ElQrZB-6",
+			"github": "https://github.com/andreimuntean1/pearos-website"
+		}
+	},
+	{
+		"title": "Atlis",
+		"category": "landing page",
+		"description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
+		"links": {
+			"demo": "https://atlis-landing-deprecated.fly.dev/",
+			"github": "https://github.com/andreimuntean1/atlis-landing"
+		}
+	},
+	{
+		"title": "New tab",
+		"category": "personal project",
+		"description": "A custom new tab page for my personal browser. It implements a minimalist design and a few useful features.",
+		"links": {
+			"demo": "https://new-tab.andreimuntean.dev",
+			"figma": "https://www.figma.com/file/oOgKPo4PHvz7SKZjoMTKCG/Edge-new-tab?type=design&t=dxKagJXP43ElQrZB-6",
+			"github": "https://github.com/andreimuntean1/new-tab"
+		}
+	},
+	{
+		"title": "Video streaming",
+		"category": "web app",
+		"description": "A simple app with a basic design, showcasing the functionality of streaming videos from a database, that could be used in larger projects.",
+		"links": {
+			"demo": "https://video-streaming.andreimuntean.dev",
+			"github": "https://github.com/andreimuntean1/video-streaming-demo"
+		}
+	},
+	{
+		"title": "PDF storage",
+		"category": "web app",
+		"description": "A small app which only purpose is to store and organize PDF files, giving you the ability to search, sort, and organize them in folders.",
+		"links": {
+			"demo": "#",
+			"github": "#"
+		},
+		"wip": true
+	}
+]
