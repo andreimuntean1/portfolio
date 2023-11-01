@@ -40,7 +40,7 @@
 	/>
 </svelte:head>
 <div class="container">
-	<img src="profile.jpg" alt="Andrei in the woods, wearing a beige sweater" />
+	<img src="profile.jpeg" alt="Andrei in the woods, wearing a beige sweater" />
 	<div class="content">
 		<p>
 			I'm a self-taught developer near Cluj-Napoca, Romania, specializing in
