@@ -4,7 +4,7 @@
   import { browser } from "$app/environment";
 
   let resumeLink: string;
-  let years = new Date().getFullYear() - 2020;
+  let years = new Date().getFullYear() - 2021;
 
   browser &&
     (navigator.language === "ro"
@@ -41,11 +41,11 @@
 <section class="ptf hero center">
   <div class="hero-content">
     <h1>
-      <span>Hi, I am</span>
+      <span>Hi, I’m</span>
       <br />
       Andrei Muntean
     </h1>
-    <p>Usually a front-end developer, sometimes a full-stack one, sometimes a web designer.</p>
+    <p>Front-end developer by focus, full-stack by experience, and web designer when it matters.</p>
   </div>
 </section>
 <section class="ptf projects" id="work">
@@ -57,14 +57,23 @@
 </section>
 <section class="ptf about center" id="about">
   <div class="container about">
-    <img src="profile.jpeg" alt="Andrei in the woods, wearing a beige sweater" />
+    <img
+      src="profile.jpg"
+      alt="Andrei in the woods, smiling, wearing a light blue suit, white shirt and navy blue tie"
+    />
     <div class="content">
       <p>
-        I'm a self-taught developer near Cluj-Napoca, Romania, specializing in front-end but interested in fullstack
-        too. I really enjoy creating things on the web, because it feels great to know that I can create somthing big
-        starting from just a blank file. My passion started about {years} years ago, during the COVID-19 pandemic, and kept
-        growing ever since. I mainly work in React, but recently I began to love Svelte. Check my resume if you're curious
-        what other technologies I work with, or hit me up on the button below. I'll do my best to get back asap to you!
+        I'm a self-taught developer based in Bucharest, Romania. While I specialize in front-end development, I'm also
+        loving the challenges brought by fullstack development. My main frameworks are React and Vue, and I've been
+        growing increasingly passionate about Svelte too. WordPress hasn't escaped my attention either, as I've recently
+        gotten a solid grasp of it.
+        <br /><br />
+        I love building things for the web. There's something really exciting about starting from a blank file and turning
+        it into something meaningful. My journey began about {years} years ago, during the COVID-19 pandemic, and my enthusiasm
+        has only grown since.
+        <br /><br />
+        Feel free to check out my resume to see what other technologies I've worked with, or just reach out using the button
+        below. I'll do my best to get back to you as soon as possible!
       </p>
       <div class="buttons">
         <div class="contact">
@@ -223,6 +232,7 @@
 
           @media screen and (max-width: 900px) {
             border-radius: 50%;
+            max-height: 200px;
           }
 
           @media screen and (max-width: 280px) {
