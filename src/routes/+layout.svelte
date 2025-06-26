@@ -10,7 +10,7 @@
 <svelte:head>
   <link rel="preload" as="image" href="figma-icon.svg" />
   <link rel="preload" as="image" href="github-icon.svg" />
-  <link rel="preload" as="image" href="profile.jpeg" />
+  <link rel="preload" as="image" href="profile.jpg" />
   <link rel="preload" as="image" href="github-icon.svg" />
   <link rel="preload" as="image" href="linkedin-icon.svg" />
 </svelte:head>
