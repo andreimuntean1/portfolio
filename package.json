@@ -21,7 +21,7 @@
     "vite": "^4.4.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": "18.20.6"
   },
   "type": "module"
 }
