@@ -26,8 +26,8 @@
     <slot />
   </section>
   <div class="gradients">
+    <div class="cyan" />
     <div class="orange" />
-    <div class="white" />
   </div>
 </div>
 <svelte:window bind:scrollY />
@@ -188,21 +188,27 @@
         filter: blur(150px);
         position: absolute;
 
-        &.orange {
-          background: rgba(207, 92, 54, 0.75);
+        &.cyan {
+          background: rgba(0, 255, 255, 0.55);
           border-radius: 850px;
           width: 380px;
-          height: 850px;
-          top: -45%;
-          left: 1%;
+          height: 380px;
+          top: -5%;
+          left: -10%;
+
+          @media screen and (max-width: 480px) {
+            width: 200px;
+            height: 200px;
+          }
         }
 
-        &.white {
-          background: #eee5e9;
-          width: 270px;
+        &.orange {
+          background: rgba(255, 115, 0, 0.55);
+          width: 880px;
           height: 270px;
-          bottom: -10%;
-          right: -2%;
+          border-radius: 50%;
+          bottom: -25%;
+          right: -20%;
         }
       }
     }
