@@ -4,7 +4,7 @@
     "category": "web app",
     "description": "bioRO is a startup where the buyers can see how the goods that the sellers are offering are produced, only by scanning a QR code.",
     "links": {
-      "demo": "https://bioro.ro",
+      "demo": "https://bioro.vercel.app/",
       "figma": "https://www.figma.com/file/pdr5GpclDIoqT5257OxceV/BioRO?type=design&t=dxKagJXP43ElQrZB-6",
       "github": "https://github.com/andreimuntean1/bioro"
     }
