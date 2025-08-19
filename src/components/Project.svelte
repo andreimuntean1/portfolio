@@ -2,7 +2,7 @@
 	interface Links {
 		demo: string;
 		figma?: string;
-		github: string;
+		github?: string;
 	}
 
 	export let title: string,
@@ -29,9 +29,11 @@
 					<img src="figma-icon.svg" alt="Figma icon" />
 				</a>
 			{/if}
+			{#if links.github}
 			<a href={links.github} target="_blank">
 				<img src="github-icon.svg" alt="Github icon" />
 			</a>
+			{/if}
 		</div>
 	</div>
 </div>
