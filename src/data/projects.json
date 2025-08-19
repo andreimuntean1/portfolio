@@ -20,6 +20,14 @@
     }
   },
   {
+    "title": "Leida",
+    "category": "landing page",
+    "description": "A simple but attractive landing page for a company that provides premium HoReCa equipment.",
+    "links": {
+      "demo": "https://leida.ro"
+    }
+  },
+  {
     "title": "Atlis",
     "category": "landing page",
     "description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
@@ -46,15 +54,6 @@
       "demo": "https://new-tab.andreimuntean.dev",
       "figma": "https://www.figma.com/file/oOgKPo4PHvz7SKZjoMTKCG/Edge-new-tab?type=design&t=dxKagJXP43ElQrZB-6",
       "github": "https://github.com/andreimuntean1/new-tab"
-    }
-  },
-  {
-    "title": "Video streaming",
-    "category": "web app",
-    "description": "A simple app with a basic design, showcasing the functionality of streaming videos from a database, that could be used in larger projects.",
-    "links": {
-      "demo": "https://video-streaming.andreimuntean.dev",
-      "github": "https://github.com/andreimuntean1/video-streaming-demo"
     }
   }
 ]
