@@ -46,6 +46,13 @@
     }
   },
   {
+    "title": "Priv",
+    "description": "Priv is a secure, real-time private messaging application built with Flutter and Supabase, specifically designed for communication between exactly two users.",
+    "links": {
+      "github": "https://github.com/andreimuntean1/priv"
+    }
+  },
+  {
     "title": "Atlis",
     "description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
     "links": {
