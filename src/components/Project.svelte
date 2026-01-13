@@ -6,7 +6,6 @@
 	}
 
 	export let title: string,
-		category: string,
 		description: string,
 		links: Links,
 		wip: boolean = false;
@@ -18,7 +17,6 @@
 	{/if}
 	<div class="title">
 		<h2>{title}</h2>
-		<h3>{category}</h3>
 	</div>
 	<p>{description}</p>
 	<div class="buttons">

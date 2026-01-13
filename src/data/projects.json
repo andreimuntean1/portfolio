@@ -1,7 +1,27 @@
 [
   {
+    "title": "CarHeltau",
+    "description": "Automotive automation tool featuring multi-step validation, dynamic PDF contract generation, and secure payment integration.",
+    "links": {
+      "demo": "https://carheltau.ro/contract-online"
+    }
+  },
+  {
+    "title": "Fota Industrial",
+    "description": "B2B presentation platform for industrial equipment featuring a custom CMS for catalog management and SEO optimization.",
+    "links": {
+      "demo": "https://fotaindustrial.ro"
+    }
+  },
+  {
+    "title": "Cursed Vision Films",
+    "description": "React performance overhaul for a cinematography site, featuring JavaScript debugging and cross-device video/gallery optimization.",
+    "links": {
+      "demo": "https://www.cursedvisionfilms.com"
+    }
+  },
+  {
     "title": "bioRO",
-    "category": "web app",
     "description": "bioRO is a startup where the buyers can see how the goods that the sellers are offering are produced, only by scanning a QR code.",
     "links": {
       "demo": "https://bioro.vercel.app/",
@@ -10,35 +30,14 @@
     }
   },
   {
-    "title": "pearOS",
-    "category": "landing page",
-    "description": "A landing page for a Linux distro that focuses on UI and UX, offering an Mac-like experience to the user.",
-    "links": {
-      "demo": "https://pearos.xyz",
-      "figma": "https://www.figma.com/file/boJFjWOSeA0PKx182NGXBg/pearOS-redesign?type=design&t=dxKagJXP43ElQrZB-6",
-      "github": "https://github.com/andreimuntean1/pearos-website"
-    }
-  },
-  {
     "title": "Leida",
-    "category": "landing page",
-    "description": "A simple but attractive landing page for a company that provides premium HoReCa equipment.",
+    "description": "A simple but attractive landing page for a company that provides premium HoReCa equipment. The website I created is not used anymore.",
     "links": {
-      "demo": "https://leida.ro"
-    }
-  },
-  {
-    "title": "Atlis",
-    "category": "landing page",
-    "description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
-    "links": {
-      "demo": "https://atlis-landing-deprecated.fly.dev/",
-      "github": "https://github.com/andreimuntean1/atlis-landing"
+      "demo": "https://dev.leida.ro"
     }
   },
   {
     "title": "Wedding website",
-    "category": "web app",
     "description": "A modern Vue app I built for my own wedding, where guests could upload photos, videos, and leave messages in a dedicated virtual space.",
     "links": {
       "demo": "https://andreisiandreea.netlify.app",
@@ -47,13 +46,11 @@
     }
   },
   {
-    "title": "New tab",
-    "category": "personal project",
-    "description": "A custom new tab page for my personal browser. It implements a minimalist design and a few useful features.",
+    "title": "Atlis",
+    "description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
     "links": {
-      "demo": "https://new-tab.andreimuntean.dev",
-      "figma": "https://www.figma.com/file/oOgKPo4PHvz7SKZjoMTKCG/Edge-new-tab?type=design&t=dxKagJXP43ElQrZB-6",
-      "github": "https://github.com/andreimuntean1/new-tab"
+      "demo": "https://atlis-landing-deprecated.fly.dev/",
+      "github": "https://github.com/andreimuntean1/atlis-landing"
     }
   }
 ]
