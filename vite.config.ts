@@ -13,6 +13,12 @@ export default defineConfig({
 
    plugins: [
       sveltekit({
+         // Mirrors Vite's own root-relative import convention (used by the content
+         // layer, e.g. `/content/site/config.json`) so tsc/svelte-check resolves it
+         // the same way Vite does at build time — `npm run dev`/`svelte-kit sync`
+         // reflects this into the generated tsconfig automatically.
+         alias: { '/content/*': 'content/*' },
+
          compilerOptions: {
             // Force runes mode for the project, except for libraries. Can be removed in svelte 6.
             runes: ({ filename }) => {
@@ -24,7 +30,13 @@ export default defineConfig({
          adapter: adapter({ runtime: 'nodejs22.x' }),
          preprocess: [
             vitePreprocess(),
-            mdsvex({ extensions: ['.mdx'], layout: './src/lib/content/MdxLayout.svelte' }),
+            mdsvex({
+               extensions: ['.mdx'],
+               layout: './src/lib/content/MdxLayout.svelte',
+               // Runes mode is forced project-wide (above); without this, mdsvex forwards
+               // layout props via legacy `$$props`, which is invalid in runes mode.
+               layoutPropForwarding: 'runes',
+            }),
          ],
          extensions: ['.svelte', '.mdx'],
       }),
