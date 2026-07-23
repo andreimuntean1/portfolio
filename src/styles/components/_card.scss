@@ -1,0 +1,123 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// ProjectCard — flagship (large, links to its case study) and entry
+// (compact, never links — MOCKUP §3.2 "no detail pages for any entry")
+// variants. Functional/token-plain per Task 9; design pass lands in
+// Task 19.
+// ---------------------------------------------------------------------------
+.card {
+   display: flex;
+   flex-direction: column;
+   gap: $space-3;
+   padding: $space-5;
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-lg;
+}
+
+.card--flagship {
+   transition:
+      transform $duration-interactive $ease-spring,
+      border-color $duration-interactive $ease-spring;
+
+   &:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.card__title {
+   font-size: $font-size-display-md;
+}
+
+.card--entry .card__title {
+   font-size: $font-size-body-lg;
+}
+
+.card__year {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   color: $color-text-faint;
+}
+
+.card__summary {
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+}
+
+.card__stack {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-2;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.card__stack-tag {
+   padding: $space-1 $space-3;
+   background: $color-walnut;
+   border-radius: $radius-pill;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   color: $color-text-muted;
+}
+
+.card__status {
+   align-self: flex-start;
+   padding: $space-1 $space-3;
+   border: $border-hairline;
+   border-radius: $radius-pill;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.card__status--shipped {
+   color: $color-copper;
+}
+
+// Retired projects stay honestly labeled, not hidden (MOCKUP §1.5) — a
+// dashed border is enough to read as "no longer live" without a second
+// color needing its own token.
+.card__status--retired {
+   border-style: dashed;
+}
+
+.card__links {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.card__link {
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .card--flagship {
+      transition: none;
+   }
+}

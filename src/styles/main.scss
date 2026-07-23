@@ -2,7 +2,9 @@
 @use 'reset';
 @use 'base';
 @use 'motion';
+@use 'components/card';
 @use 'components/footer';
+@use 'components/hero';
 @use 'components/mdx';
 @use 'components/nav';
 @include atelier-font-faces;

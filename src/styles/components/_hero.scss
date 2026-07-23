@@ -1,0 +1,204 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Home page — functional/token-plain per Task 9 (Phase 4 note: the design
+// pass lands in Task 19). Houses every block on `/`: hero, featured-work
+// grid, process strip, trust band, contact teaser — same one-file-per-route
+// grouping already used by `_footer.scss` (footer + availability).
+// ---------------------------------------------------------------------------
+.hero {
+   display: flex;
+   flex-direction: column;
+   gap: $space-4;
+   padding: $space-8 $space-5 $space-7;
+}
+
+.hero__eyebrow {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.hero__headline {
+   max-width: 24ch;
+   font-size: $font-size-display-lg;
+}
+
+.hero__support {
+   max-width: 40ch;
+   font-size: $font-size-body-lg;
+   color: $color-text-muted;
+}
+
+.hero__actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin-top: $space-3;
+}
+
+// ---------------------------------------------------------------------------
+// CTA — shared primary/secondary button, used in the hero and the contact
+// teaser below.
+// ---------------------------------------------------------------------------
+.cta {
+   display: inline-flex;
+   align-items: center;
+   padding: $space-3 $space-5;
+   border-radius: $radius-pill;
+   font-family: $font-body;
+   font-weight: $weight-medium;
+   font-size: $font-size-body-md;
+   transition:
+      transform $duration-interactive $ease-spring,
+      background $duration-interactive $ease-spring,
+      border-color $duration-interactive $ease-spring,
+      color $duration-interactive $ease-spring;
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.cta--primary {
+   background: $color-copper;
+   color: $color-umber;
+
+   &:hover {
+      background: $color-copper-hover;
+      transform: scale(1.05);
+   }
+}
+
+.cta--secondary {
+   border: $border-hairline;
+   color: $color-ivory;
+
+   &:hover {
+      border-color: $color-copper;
+      color: $color-copper;
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Featured work — 3 flagship `ProjectCard`s.
+// ---------------------------------------------------------------------------
+.featured {
+   padding: $space-7 $space-5;
+   border-top: $border-hairline;
+}
+
+.featured__heading {
+   margin-bottom: $space-5;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   font-weight: $weight-regular;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.featured__grid {
+   display: grid;
+   gap: $space-5;
+}
+
+// ---------------------------------------------------------------------------
+// Process strip — condensed Discovery → Build → Handover, heading links
+// through to /process (MOCKUP §3.1.3).
+// ---------------------------------------------------------------------------
+.process-strip {
+   padding: $space-7 $space-5;
+   border-top: $border-hairline;
+}
+
+.process-strip__heading {
+   margin-bottom: $space-5;
+   font-size: $font-size-display-md;
+
+   a {
+      color: inherit;
+
+      &:hover {
+         color: $color-copper;
+      }
+
+      &:focus-visible {
+         outline: $border-accent;
+         outline-offset: $space-1;
+      }
+   }
+}
+
+.process-strip__list {
+   display: flex;
+   flex-direction: column;
+   gap: $space-4;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   counter-reset: process-step;
+}
+
+.process-strip__step {
+   position: relative;
+   padding-inline-start: $space-6;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+   counter-increment: process-step;
+
+   &::before {
+      content: counter(process-step, decimal-leading-zero);
+      position: absolute;
+      inset-inline-start: 0;
+      font-family: $font-mono;
+      font-size: $font-size-label;
+      color: $color-copper;
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Trust band — client quotes from featured projects that have one. Renders
+// nothing today (no featured project has a seeded `quote`); markup stays
+// correct for when one does.
+// ---------------------------------------------------------------------------
+.trust-band {
+   display: flex;
+   flex-direction: column;
+   gap: $space-6;
+   padding: $space-7 $space-5;
+   border-top: $border-hairline;
+}
+
+// ---------------------------------------------------------------------------
+// Contact teaser — availability restated + a CTA into /contact.
+// ---------------------------------------------------------------------------
+.contact-teaser {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: $space-4;
+   padding: $space-7 $space-5 $space-8;
+   border-top: $border-hairline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .cta {
+      transition: none;
+   }
+}
+
+@media (min-width: $breakpoint-md) {
+   .featured__grid {
+      grid-template-columns: repeat(3, 1fr);
+   }
+
+   .contact-teaser {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+   }
+}

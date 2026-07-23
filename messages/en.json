@@ -30,6 +30,9 @@
    "home_eyebrow": "from the workshop of Andrei Muntean",
    "home_headline": "Made with care, shipped with agents.",
    "home_support": "Full-stack engineer — design-minded, AI-native. Six-week handovers, documentation included, no mystery boxes.",
+   "home_step_1": "Discovery. We scope the build and agree on what done looks like.",
+   "home_step_2": "Build. Weekly demos — agents move fast, I review every line.",
+   "home_step_3": "Handover. Docs, tests, a codebase that's yours.",
    "not_found_title": "Lost in the workshop.",
    "not_found_cta": "Back to the workshop"
 }
