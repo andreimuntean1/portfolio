@@ -1,0 +1,159 @@
+// ============================================================================
+// Design tokens — "The Atelier" (rebrand direction 1c)
+// Source of truth for the visual system. Framework-agnostic SCSS: import this
+// file directly, or use it as the reference when porting to CSS custom
+// properties / a JS theme object for whatever stack follows.
+// ============================================================================
+
+// ---------------------------------------------------------------------------
+// Color
+// ---------------------------------------------------------------------------
+$color-umber:   #1e1712; // canvas — page background
+$color-bench:   #281e16; // surface — cards, panels
+$color-walnut:  #3a2c1f; // chips, wells, nested surfaces
+$color-seam:    #443626; // borders, hairlines, dividers
+$color-ivory:   #f1e8d8; // primary text on dark
+$color-copper:  #c5854e; // accent — CTAs, marks, links, emphasis
+$color-copper-hover: #d99a63; // copper on hover/active
+
+// Secondary text tones (ivory at reduced opacity — use color.adjust or rgba in consumer)
+$color-text-muted: rgba(241, 232, 216, 0.72); // ~#c2b5a2, body copy on umber/bench
+$color-text-faint:  rgba(241, 232, 216, 0.55); // labels, meta, margin notes
+
+$color-map: (
+  "umber": $color-umber,
+  "bench": $color-bench,
+  "walnut": $color-walnut,
+  "seam": $color-seam,
+  "ivory": $color-ivory,
+  "copper": $color-copper,
+);
+
+// ---------------------------------------------------------------------------
+// Typography
+// ---------------------------------------------------------------------------
+// Basteleur   — Velvetyne — display serif, visible-hand character. Headlines,
+//               the wordmark, section titles. Weights: 400 (Moonlight cut), 700 (Bold cut).
+// Apfel Grotezk — Collletttivo — round, airy grotesque. Body copy, UI, nav, buttons.
+//               Weights: 400 (Regular), 500 (Mittel), 700 (Fett).
+// Fragment Mono — W. Huang, OFL — chosen mono for labels, maker's-notes margin
+//               copy, data/entry numbers. Weights: 400 regular + 400 italic.
+//               (Self-hosted locally rather than via Google Fonts, to keep the
+//               whole type system dependency-free.)
+$font-display: "Basteleur", Georgia, serif;
+$font-body:    "Apfel Grotezk", Helvetica, Arial, sans-serif;
+$font-mono:    "Fragment Mono", "SFMono-Regular", Consolas, monospace;
+
+$weight-regular: 400;
+$weight-medium:  500; // Apfel Grotezk "Mittel"
+$weight-bold:    700; // Apfel Grotezk "Fett" / Basteleur "Bold"
+
+// Type scale — fluid-friendly base sizes (rem). Adjust per breakpoint in consumer.
+$font-size-display-lg: 2.75rem;  // ~44px hero/section headlines
+$font-size-display-md: 2.125rem; // ~34px card/subsection headlines
+$font-size-body-lg:    1rem;     // ~16px lead body copy
+$font-size-body-md:    0.875rem; // ~14px default body copy
+$font-size-label:      0.75rem;  // ~12px eyebrow labels, section numerals
+$font-size-micro:      0.6875rem; // ~11px margin notes, captions
+
+$line-height-tight: 1.12;
+$line-height-snug:  1.18;
+$line-height-body:  1.6;
+$line-height-mono:  1.9;
+
+$letter-spacing-wordmark: -0.05em; // "am" set close (headers/wordmark lockup)
+$letter-spacing-roundel:  -0.04em; // "am" inside the roundel
+$letter-spacing-label:    0.2em;   // uppercase section labels ("PALETTE", "TYPE"...)
+$letter-spacing-stamp:    0.24em;  // "SHIPPED" tracked caps on the shipping stamp
+
+// ---------------------------------------------------------------------------
+// Shape
+// ---------------------------------------------------------------------------
+$radius-sm:  10px; // palette swatches, small chips
+$radius-md:  14px; // cards, panels, secondary buttons
+$radius-lg:  20px; // outer card / section containers
+$radius-pill: 999px; // primary buttons, pill badges, direction tags
+
+// ---------------------------------------------------------------------------
+// Motion — "Handset"
+// ---------------------------------------------------------------------------
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+$duration-interactive: 320ms;
+
+// Hover behavior (reference, apply per component):
+//   primary button   -> transform: scale(1.05); background: $color-copper-hover
+//   secondary/card    -> transform: translateY(-3px) scale(1.02); border-color: $color-copper
+// Always gate motion behind prefers-reduced-motion.
+
+// ---------------------------------------------------------------------------
+// Spacing scale
+// ---------------------------------------------------------------------------
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+
+// ---------------------------------------------------------------------------
+// Borders
+// ---------------------------------------------------------------------------
+$border-hairline: 1px solid $color-seam;
+$border-accent:   1.5px solid $color-copper;
+
+// ---------------------------------------------------------------------------
+// Font faces — see /assets/fonts. Declare once, globally, in the app entry:
+// ---------------------------------------------------------------------------
+@mixin atelier-font-faces($font-path: "/assets/fonts") {
+  @font-face {
+    font-family: "Basteleur";
+    src: url("#{$font-path}/Basteleur-Moonlight.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Basteleur";
+    src: url("#{$font-path}/Basteleur-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Apfel Grotezk";
+    src: url("#{$font-path}/ApfelGrotezk-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Apfel Grotezk";
+    src: url("#{$font-path}/ApfelGrotezk-Mittel.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Apfel Grotezk";
+    src: url("#{$font-path}/ApfelGrotezk-Fett.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fragment Mono";
+    src: url("#{$font-path}/FragmentMono-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fragment Mono";
+    src: url("#{$font-path}/FragmentMono-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+}
