@@ -1,0 +1,134 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Case study (`/work/[slug]`) — flagship-only sales document, MOCKUP §3.3.
+// Spec-sheet header + optional outcome banner + MDX body + optional quote +
+// shipping-stamp footer. Every field below `title`/`summary`/`role`/`year`/
+// `stack`/`status`/`links` is optional per the content schema — both the
+// with- and without-state are designed, per §3.3's CarHeltau (client,
+// timeline, no Figma) vs. Wedding Website (no client, quote, Figma+GitHub,
+// no metrics/timeline) content shapes. Functional/token-plain per Task 11
+// (Phase 4 note: the design pass lands in Task 19).
+// ---------------------------------------------------------------------------
+.case-study {
+   max-width: 48rem;
+   margin-inline: auto;
+   padding: $space-8 $space-5;
+}
+
+.case-study__header {
+   margin-bottom: $space-7;
+}
+
+.case-study__client {
+   margin-bottom: $space-2;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.case-study__title {
+   font-size: $font-size-display-lg;
+}
+
+.case-study__summary {
+   margin-top: $space-4;
+   font-size: $font-size-body-lg;
+   color: $color-text-muted;
+}
+
+.case-study__meta {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: $space-4;
+   margin-top: $space-5;
+}
+
+.case-study__year,
+.case-study__role,
+.case-study__timeline {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   color: $color-text-faint;
+}
+
+.case-study__stack {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-2;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.case-study__stack-tag {
+   padding: $space-1 $space-3;
+   background: $color-walnut;
+   border-radius: $radius-pill;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   color: $color-text-muted;
+}
+
+.case-study__status {
+   padding: $space-1 $space-3;
+   border: $border-hairline;
+   border-radius: $radius-pill;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.case-study__status--shipped {
+   color: $color-copper;
+}
+
+// Retired case studies stay honestly labeled, not hidden (MOCKUP §1.5) —
+// matches `.card__status--retired`'s dashed-border treatment.
+.case-study__status--retired {
+   border-style: dashed;
+}
+
+.case-study__links {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin: $space-4 0 0;
+   padding: 0;
+   list-style: none;
+}
+
+.case-study__link {
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.case-study__body {
+   margin-block: $space-7;
+}
+
+.case-study__footer {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: $space-5;
+   margin-top: $space-8;
+   padding-top: $space-7;
+   border-top: $border-hairline;
+   text-align: center;
+}
