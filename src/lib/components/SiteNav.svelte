@@ -14,9 +14,7 @@
    // reactive, not just the URL itself.
    const locale = $derived(reactiveLocale());
 
-   // Bilingual disclosure-toggle label — kept local rather than a new paraglide
-   // message key, since Task 8's message-key surface is fixed by Task 7.
-   const menuLabel = $derived(locale === 'en' ? 'Menu' : 'Meniu');
+   const menuLabel = $derived(m.nav_menu_toggle({}, { locale }));
 
    const links: NavLink[] = $derived([
       { path: '/work', label: m.nav_work({}, { locale }) },
@@ -66,7 +64,7 @@
         _nav.scss) — kept as a plain sibling `<nav>` rather than nested inside
         `.nav__disclosure` below, so its flex sizing never depends on a
         `<details>` element's box. -->
-   <nav class="nav__links" aria-label="Primary">
+   <nav class="nav__links" aria-label={m.nav_landmark_primary({}, { locale })}>
       {@render navLinks()}
    </nav>
 
@@ -74,7 +72,7 @@
         takes over. -->
    <details class="nav__disclosure">
       <summary class="nav__disclosure-toggle">{menuLabel}</summary>
-      <nav class="nav__panel" aria-label="Primary">
+      <nav class="nav__panel" aria-label={m.nav_landmark_primary({}, { locale })}>
          {@render navLinks()}
       </nav>
    </details>
