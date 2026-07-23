@@ -1,0 +1,25 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+
+# Pre-existing project docs/assets outside the SvelteKit app scope (untouched
+# by this scaffold; see repo root CLAUDE.md)
+/SPEC.md
+/MOCKUP.md
+/DESIGN.md
+/PLAN.md
+/CLAUDE.md
+/design-files/
+/styles/
+/assets/
+/.claude/
+/.superpowers/
+
+# Generated output
+/src/lib/paraglide/
