@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { mdsvex } from 'mdsvex';
@@ -33,11 +34,41 @@ export default defineConfig({
 
          // Deployed on Vercel; pin the Node runtime rather than relying on adapter-auto's detection.
          adapter: adapter({ runtime: 'nodejs22.x' }),
+         prerender: {
+            // The nav (Task 8), footer (Task 8) and home page (Task 9) already link to
+            // `/work`, `/work/[slug]`, `/process`, `/about`, `/contact` and `/colophon` —
+            // routes owned by Tasks 10-12, which don't exist yet. That's the plan's
+            // established pattern (see Task 9's brief), not a broken link, so a 404 from
+            // exactly those paths shouldn't fail the build; anything else still does.
+            handleHttpError: ({ path, message }) => {
+               const isPendingRoute =
+                  /^\/(ro\/)?(work(\/[^/]+)?|process|about|contact|colophon)$/.test(path);
+
+               if (isPendingRoute) {
+                  return;
+               }
+
+               throw new Error(message);
+            },
+         },
          preprocess: [
             vitePreprocess(),
             mdsvex({
                extensions: ['.mdx'],
-               layout: './src/lib/content/MdxLayout.svelte',
+               // Absolute path, not the project-root-relative string mdsvex's own
+               // docs show: mdsvex emits this verbatim as an import specifier in
+               // every compiled `.mdx` file, resolved relative to *that file's own
+               // directory* by the bundler — not to the project root. Content lives
+               // several directories deep (`content/projects/<slug>/en.mdx`), where
+               // a root-relative string doesn't reach `src/lib/...` at all. Went
+               // unnoticed until now because no route had eagerly imported the
+               // content registry into a page bundle before Task 9 (`getFeatured`
+               // in the home page's `+page.ts`) — `svelte-check` doesn't resolve
+               // real imports, and Vitest's SSR module runner tolerates it in a way
+               // `vite build`'s Rollup/rolldown resolver does not.
+               layout: fileURLToPath(
+                  new URL('./src/lib/content/MdxLayout.svelte', import.meta.url),
+               ),
                // Runes mode is forced project-wide (above); without this, mdsvex forwards
                // layout props via legacy `$$props`, which is invalid in runes mode.
                layoutPropForwarding: 'runes',
