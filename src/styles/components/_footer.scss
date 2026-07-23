@@ -1,0 +1,102 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Footer — wordmark + availability, link row, colophon/font-credit line.
+// Single column on mobile; the desktop rule spreads brand vs. links.
+// ---------------------------------------------------------------------------
+.footer {
+   display: flex;
+   flex-direction: column;
+   gap: $space-5;
+   padding: $space-6 $space-5;
+   border-top: $border-hairline;
+}
+
+.footer__brand {
+   display: flex;
+   flex-direction: column;
+   gap: $space-3;
+}
+
+.footer__wordmark {
+   display: block;
+   width: fit-content;
+
+   svg {
+      display: block;
+      width: auto;
+      height: $space-5;
+   }
+}
+
+.footer__links {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.footer__link {
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.footer__credits {
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   color: $color-text-faint;
+}
+
+.footer__credits-link {
+   color: inherit;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+@media (min-width: $breakpoint-md) {
+   .footer {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Availability — status line. Rendered in the footer today; Home's hero and
+// /contact reuse the same component in Tasks 9/12.
+// ---------------------------------------------------------------------------
+.availability {
+   display: flex;
+   align-items: center;
+   gap: $space-2;
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+}
+
+.availability__dot {
+   display: inline-block;
+   width: $space-2;
+   height: $space-2;
+   background: $color-copper;
+   border-radius: $radius-pill;
+}

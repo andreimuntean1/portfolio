@@ -1,0 +1,183 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Skip link — hidden until keyboard focus, then the first visible thing on
+// the page (WCAG 2.4.1 bypass-blocks). Restyled in the Task 19 design pass.
+// ---------------------------------------------------------------------------
+.skip-link {
+   position: absolute;
+   top: $space-2;
+   left: $space-2;
+   z-index: 100;
+   padding: $space-2 $space-4;
+   background: $color-copper;
+   color: $color-umber;
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   border-radius: $radius-sm;
+   transform: translateY(-200%);
+   transition: transform $duration-interactive $ease-spring;
+
+   &:focus {
+      transform: translateY(0);
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Nav — persistent site header. Two independent copies of the same link
+// list (see `SiteNav.svelte`'s `navLinks` snippet): `.nav__panel` inside a
+// native `<details>` disclosure for mobile, `.nav__links` as a plain
+// always-visible row for desktop. Only one is ever displayed at a time
+// (toggled by the breakpoint below), so exactly one reaches the
+// accessibility tree. This costs a little markup duplication but keeps
+// both layouts plain, ordinary flex — no JS, and no reliance on forcing a
+// closed `<details>` open via CSS (that route hit a real Chromium/WebKit
+// bug: a flex item promoted through a `display: contents` ancestor
+// collapses to a zero-size box that paints its children in the right place
+// but hit-tests as unclickable).
+// ---------------------------------------------------------------------------
+.nav {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: $space-4;
+   padding: $space-4 $space-5;
+   border-bottom: $border-hairline;
+}
+
+.nav__links {
+   display: none;
+   align-items: center;
+   gap: $space-5;
+}
+
+.nav__brand {
+   display: inline-flex;
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.nav__wordmark {
+   display: block;
+
+   svg {
+      display: block;
+      width: auto;
+      height: $space-6;
+   }
+}
+
+.nav__disclosure {
+   position: relative;
+}
+
+.nav__disclosure-toggle {
+   padding: $space-2 $space-3;
+   list-style: none;
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-ivory;
+   cursor: pointer;
+
+   &::-webkit-details-marker {
+      display: none;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.nav__panel {
+   position: absolute;
+   right: 0;
+   z-index: 10;
+   flex-direction: column;
+   gap: $space-4;
+   padding: $space-4;
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-md;
+}
+
+// `display` deliberately lives here, scoped to `[open]`, rather than
+// unconditionally on `.nav__panel` above: browsers hide a closed
+// `<details>`'s non-summary children via their own UA stylesheet, and an
+// unconditional `display: flex` from us would (author origin beats
+// user-agent origin regardless of specificity) defeat that native
+// collapse — the menu would render permanently open.
+.nav__disclosure[open] .nav__panel {
+   display: flex;
+}
+
+.nav__list {
+   display: flex;
+   flex-direction: column;
+   gap: $space-3;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.nav__link {
+   font-family: $font-body;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+
+   &[aria-current='page'] {
+      color: $color-copper;
+      font-weight: $weight-medium;
+   }
+}
+
+.nav__locale {
+   display: inline-flex;
+   gap: $space-1;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   color: $color-text-faint;
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.nav__locale-option[aria-current] {
+   color: $color-copper;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .skip-link {
+      transition: none;
+   }
+}
+
+@media (min-width: $breakpoint-md) {
+   .nav__disclosure {
+      display: none;
+   }
+
+   .nav__links {
+      display: flex;
+   }
+
+   .nav__links .nav__list {
+      flex-direction: row;
+      align-items: center;
+   }
+}

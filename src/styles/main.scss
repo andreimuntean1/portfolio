@@ -2,5 +2,7 @@
 @use 'reset';
 @use 'base';
 @use 'motion';
+@use 'components/footer';
 @use 'components/mdx';
+@use 'components/nav';
 @include atelier-font-faces;

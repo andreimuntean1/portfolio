@@ -102,3 +102,10 @@ $space-8: 64px;
 // ---------------------------------------------------------------------------
 $border-hairline: 1px solid $color-seam;
 $border-accent:   1.5px solid $color-copper;
+
+// ---------------------------------------------------------------------------
+// Breakpoints — single mobile/desktop split for now (nav disclosure, footer
+// column stacking). Expand into a full scale if the Task 19 design pass
+// needs more steps.
+// ---------------------------------------------------------------------------
+$breakpoint-md: 48rem; // ~768px
