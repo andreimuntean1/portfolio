@@ -16,10 +16,15 @@ bun.lockb
 /PLAN.md
 /CLAUDE.md
 /design-files/
-/styles/
-/assets/
 /.claude/
 /.superpowers/
 
 # Generated output
 /src/lib/paraglide/
+
+# Pre-existing, hand-aligned design tokens ported in from the old top-level
+# styles/_variables.scss (see repo root CLAUDE.md) rather than newly authored —
+# left in its original alignment/quote style so `git log --follow` keeps
+# tracing history through the Task 3 move. Also stylelint-ignored (see
+# .stylelintrc.json); every other file under src/styles/ is fully linted.
+/src/styles/_variables.scss

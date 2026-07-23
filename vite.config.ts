@@ -7,6 +7,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 export default defineConfig({
+   resolve: {
+      alias: { $styles: '/src/styles' },
+   },
+
    plugins: [
       sveltekit({
          compilerOptions: {

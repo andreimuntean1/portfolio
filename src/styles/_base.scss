@@ -1,0 +1,39 @@
+@use 'variables' as *;
+
+html {
+   color-scheme: dark;
+   scroll-behavior: smooth;
+}
+
+body {
+   background: $color-umber;
+   color: $color-ivory;
+   font-family: $font-body;
+   font-size: $font-size-body-lg;
+   line-height: $line-height-body;
+   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+   font-family: $font-display;
+   font-weight: $weight-bold;
+   line-height: $line-height-tight;
+}
+
+a {
+   color: $color-copper;
+   text-decoration: none;
+}
+
+::selection {
+   background: $color-walnut;
+   color: $color-ivory;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   html {
+      scroll-behavior: auto;
+   }
+}
