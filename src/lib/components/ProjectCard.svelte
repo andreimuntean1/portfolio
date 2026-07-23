@@ -48,6 +48,9 @@
    </a>
 {:else}
    <article class="card card--entry">
+      {#if project.entryNo !== undefined}
+         <p class="card__ledger">№ {String(project.entryNo).padStart(3, '0')}</p>
+      {/if}
       <h3 class="card__title">{project.title}</h3>
       <p class="card__year">{project.year}</p>
       <p class="card__summary">{project.summary}</p>

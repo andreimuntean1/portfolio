@@ -40,6 +40,18 @@
    font-size: $font-size-body-lg;
 }
 
+// Entry-only catalog numeral (MOCKUP §3.2 "optional ledger touch") — mono,
+// tracked-caps like the featured-section eyebrow, so it reads as a workshop
+// ledger stamp rather than a second title line. Keep/kill call for the
+// Task 19 design pass; markup and styling carry it for now.
+.card__ledger {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
 .card__year {
    font-family: $font-mono;
    font-size: $font-size-label;

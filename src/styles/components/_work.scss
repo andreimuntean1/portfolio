@@ -1,0 +1,57 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Work index (`/work`) — flagship section (3 large `ProjectCard`s, link out
+// to their case studies) and entries section (compact `ProjectCard`s,
+// catalog-numbered — MOCKUP §3.2). Functional/token-plain per Task 10
+// (Phase 4 note: the design pass lands in Task 19), following the
+// one-file-per-route grouping already used by `_hero.scss`.
+// ---------------------------------------------------------------------------
+.work-flagships {
+   padding: $space-8 $space-5 $space-7;
+}
+
+.work-flagships__heading {
+   margin-bottom: $space-5;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   font-weight: $weight-regular;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.work-flagships__grid {
+   display: grid;
+   gap: $space-5;
+}
+
+.work-entries {
+   padding: $space-7 $space-5 $space-8;
+   border-top: $border-hairline;
+}
+
+.work-entries__heading {
+   margin-bottom: $space-5;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   font-weight: $weight-regular;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.work-entries__grid {
+   display: grid;
+   gap: $space-4;
+}
+
+@media (min-width: $breakpoint-md) {
+   .work-flagships__grid {
+      grid-template-columns: repeat(3, 1fr);
+   }
+
+   .work-entries__grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+}
