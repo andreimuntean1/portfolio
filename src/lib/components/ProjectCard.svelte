@@ -34,7 +34,7 @@
    </ul>
 {/snippet}
 
-{#if variant === 'flagship'}
+{#if variant === 'flagship' && project.tier === 'flagship'}
    <a class="card card--flagship" href={caseStudyHref}>
       <h3 class="card__title" style:view-transition-name={'title-' + project.slug}>
          {project.title}

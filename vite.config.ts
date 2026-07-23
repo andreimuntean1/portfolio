@@ -41,6 +41,16 @@ export default defineConfig({
             // established pattern (see Task 9's brief), not a broken link, so a 404 from
             // exactly those paths shouldn't fail the build; anything else still does.
             handleHttpError: ({ path, message }) => {
+               // TASK 10 TODO: the `work(\/[^/]+)?` sub-pattern below allows-lists
+               // *any* single-segment `/work/<slug>` path, not just today's
+               // known-missing route. That's fine while `/work/[slug]` doesn't
+               // exist yet, but once Task 10 adds it, this blanket regex will keep
+               // silently swallowing 404s from mistyped/nonexistent slugs (e.g. a
+               // typo'd `/work/carheltua`) in future internal links, defeating the
+               // build's broken-link guard for that path shape. Narrow or remove
+               // the `work` branch once the dynamic route exists — real slug
+               // validation should come from SvelteKit's normal 404 handling (or an
+               // `entries()` allowlist), not this regex.
                const isPendingRoute =
                   /^\/(ro\/)?(work(\/[^/]+)?|process|about|contact|colophon)$/.test(path);
 

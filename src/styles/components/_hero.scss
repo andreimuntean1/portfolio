@@ -118,18 +118,18 @@
 .process-strip__heading {
    margin-bottom: $space-5;
    font-size: $font-size-display-md;
+}
 
-   a {
-      color: inherit;
+.process-strip__link {
+   color: inherit;
 
-      &:hover {
-         color: $color-copper;
-      }
+   &:hover {
+      color: $color-copper;
+   }
 
-      &:focus-visible {
-         outline: $border-accent;
-         outline-offset: $space-1;
-      }
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
    }
 }
 

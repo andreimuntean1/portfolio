@@ -52,7 +52,7 @@
 
 <section class="process-strip" aria-labelledby="process-heading">
    <h2 class="process-strip__heading" id="process-heading">
-      <a href={resolvedHref(localizeHref('/process', { locale }))}>
+      <a class="process-strip__link" href={resolvedHref(localizeHref('/process', { locale }))}>
          {m.nav_process({}, { locale })}
       </a>
    </h2>
