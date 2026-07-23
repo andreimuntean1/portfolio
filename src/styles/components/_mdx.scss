@@ -1,0 +1,139 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// MakerNote — margin aside, prefixed "n.b. —" (SPEC §1 voice rules)
+// ---------------------------------------------------------------------------
+.maker-note {
+   display: block;
+   margin-block: $space-6;
+   padding-inline-start: $space-4;
+   border-left: $border-accent;
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   font-style: italic;
+   line-height: $line-height-mono;
+   color: $color-copper;
+}
+
+.maker-note__prefix {
+   margin-inline-end: $space-1;
+}
+
+// ---------------------------------------------------------------------------
+// AgentNotes — structured did/decided/verified block
+// ---------------------------------------------------------------------------
+.agent-notes {
+   margin-block: $space-7;
+   padding: $space-6;
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-md;
+}
+
+.agent-notes__title {
+   margin-bottom: $space-4;
+   font-size: $font-size-body-lg;
+}
+
+.agent-notes__grid {
+   display: grid;
+   gap: $space-3;
+
+   dt {
+      font-family: $font-mono;
+      font-size: $font-size-label;
+      letter-spacing: $letter-spacing-label;
+      text-transform: uppercase;
+      color: $color-text-faint;
+   }
+
+   dd {
+      color: $color-text-muted;
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Metrics — outcome banner chips (max 3, per frontmatter schema)
+// ---------------------------------------------------------------------------
+.metrics {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-6;
+   margin-block: $space-7;
+   padding: 0;
+   list-style: none;
+}
+
+.metrics__item {
+   display: flex;
+   flex-direction: column;
+   gap: $space-1;
+}
+
+.metrics__value {
+   font-family: $font-display;
+   font-size: $font-size-display-md;
+   font-weight: $weight-bold;
+   line-height: $line-height-tight;
+   color: $color-copper;
+}
+
+.metrics__label {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+// ---------------------------------------------------------------------------
+// Quote — client testimonial pull-quote
+// ---------------------------------------------------------------------------
+.quote {
+   margin-block: $space-7;
+   padding-inline-start: $space-5;
+   border-left: $border-accent;
+}
+
+.quote__text {
+   font-family: $font-display;
+   font-size: $font-size-display-md;
+   line-height: $line-height-snug;
+   color: $color-ivory;
+}
+
+.quote__author {
+   margin-top: $space-3;
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-faint;
+}
+
+// ---------------------------------------------------------------------------
+// Figure — case-study gallery image, resolved via the enhanced-img glob
+// ---------------------------------------------------------------------------
+.figure {
+   margin-block: $space-7;
+
+   img {
+      width: 100%;
+      border-radius: $radius-md;
+   }
+}
+
+.figure__caption {
+   margin-top: $space-3;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   color: $color-text-faint;
+}
+
+// ---------------------------------------------------------------------------
+// Stamp — inline SHIPPED mark, case-study footer (rotation/color baked into
+// the SVG asset itself; this only positions it)
+// ---------------------------------------------------------------------------
+.stamp {
+   display: flex;
+   justify-content: center;
+   margin-block: $space-8;
+}

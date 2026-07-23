@@ -23,6 +23,9 @@ action. Deployed on Vercel. Full requirements: `SPEC.md`. Visual system:
 ## Content workflow (the CMS is this repo)
 
 - Projects live in `content/projects/<slug>/{en.mdx,ro.mdx}` + `assets/`.
+- MDX bodies import the components they use from `$lib/components/mdx`
+  (`MakerNote`, `AgentNotes`, `Metrics`, `Quote`, `Figure`, `Stamp`) —
+  mdsvex doesn't auto-expose custom tags, only markdown's own elements.
 - **EN is the source of truth.** Write EN first, translate to RO; Andrei
   (native speaker) reviews RO before merge. Published content needs both
   locales; `draft: true` may be EN-only and is excluded from builds.

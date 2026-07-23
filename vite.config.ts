@@ -1,4 +1,5 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
+import { enhancedImages } from '@sveltejs/enhanced-img';
 import { mdsvex } from 'mdsvex';
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
@@ -12,6 +13,10 @@ export default defineConfig({
    },
 
    plugins: [
+      // Must run before sveltekit() so it can preprocess `<enhanced:img>` markup
+      // ahead of Svelte compilation.
+      enhancedImages(),
+
       sveltekit({
          // Mirrors Vite's own root-relative import convention (used by the content
          // layer, e.g. `/content/site/config.json`) so tsc/svelte-check resolves it
