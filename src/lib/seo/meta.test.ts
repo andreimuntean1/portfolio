@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ProjectMeta } from '$lib/content/projects';
-import { alternates, jsonLdCreativeWork, ogImagePath, pageTitle } from './meta';
+import { alternates, canonicalUrl, jsonLdCreativeWork, ogImagePath, pageTitle } from './meta';
 
 describe('pageTitle', () => {
    it('appends the brand suffix to a given title', () => {
@@ -19,6 +19,27 @@ describe('alternates', () => {
          { hreflang: 'ro', href: 'https://andreimuntean.dev/ro/work' },
          { hreflang: 'x-default', href: 'https://andreimuntean.dev/work' },
       ]);
+   });
+
+   it('normalizes the root path so no entry gets a trailing slash', () => {
+      // Regression test: paraglide's `localizeHref('/', { locale: 'ro' })`
+      // returns `/ro/` (trailing slash), which would otherwise make the RO
+      // home page's own hreflang self-reference mismatch its `/ro` canonical.
+      expect(alternates('/')).toEqual([
+         { hreflang: 'en', href: 'https://andreimuntean.dev/' },
+         { hreflang: 'ro', href: 'https://andreimuntean.dev/ro' },
+         { hreflang: 'x-default', href: 'https://andreimuntean.dev/' },
+      ]);
+   });
+});
+
+describe('canonicalUrl', () => {
+   it('strips a trailing slash from a localized path', () => {
+      expect(canonicalUrl('/ro/')).toBe('https://andreimuntean.dev/ro');
+   });
+
+   it('preserves the root path itself', () => {
+      expect(canonicalUrl('/')).toBe('https://andreimuntean.dev/');
    });
 });
 

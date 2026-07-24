@@ -23,11 +23,26 @@ export function pageTitle(title?: string): string {
 /**
  * Prepends the site origin to an already-localized path.
  *
+ * Also strips a trailing slash, except on the root path itself (`/`).
+ * SvelteKit routes this site with no trailing slashes, but paraglide's
+ * `localizeHref()` appends one when it localizes the root path to a
+ * non-base locale (e.g. `localizeHref('/', { locale: 'ro' })` → `/ro/`,
+ * see `localizeUrlDefaultPattern()` in `$lib/paraglide/runtime`) — every
+ * other path is unaffected, since that function only produces a bare
+ * trailing slash when there are no path segments to join. Without this,
+ * a page's own hreflang self-reference could point at a different URL
+ * than its own canonical link.
+ *
  * @param localizedPath - locale-prefixed pathname (e.g. `/ro/work`)
  * @return the absolute canonical URL
  */
 export function canonicalUrl(localizedPath: string): string {
-   return `${SITE_URL}${localizedPath}`;
+   const normalizedPath =
+      localizedPath.length > 1 && localizedPath.endsWith('/')
+         ? localizedPath.slice(0, -1)
+         : localizedPath;
+
+   return `${SITE_URL}${normalizedPath}`;
 }
 
 /**
