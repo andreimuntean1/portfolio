@@ -173,7 +173,15 @@
 
          <input type="hidden" name="startedAt" value={startedAt} />
 
-         <button class="cta cta--primary" type="submit" disabled={submitting}>
+         <button
+            class="cta cta--primary"
+            class:cta--busy={submitting}
+            type="submit"
+            disabled={submitting}
+         >
+            {#if submitting}
+               <span class="cta__spinner" aria-hidden="true"></span>
+            {/if}
             {submitting ? m.form_submitting({}, { locale }) : m.form_submit({}, { locale })}
          </button>
 

@@ -39,7 +39,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 }
 
@@ -51,11 +51,6 @@
 .contact-form__error {
    font-size: $font-size-body-md;
    color: $color-copper;
-}
-
-.contact-form .cta[disabled] {
-   cursor: not-allowed;
-   opacity: 0.6;
 }
 
 .contact-form__success {

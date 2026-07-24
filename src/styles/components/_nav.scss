@@ -69,7 +69,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 
    &:hover .nav__wordmark svg {
@@ -112,7 +112,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 
    &[aria-current='page'] {
@@ -147,7 +147,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 }
 
@@ -219,7 +219,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 }
 
@@ -290,7 +290,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 
    &[aria-current='page'] {

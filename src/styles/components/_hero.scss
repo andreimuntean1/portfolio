@@ -40,17 +40,18 @@
 }
 
 // ---------------------------------------------------------------------------
-// CTA — shared primary/secondary button, used in the hero and the contact
-// teaser below.
+// CTA — shared primary/secondary/link/busy button system (MOCKUP §1.3),
+// used in the hero, the contact teaser, the contact form's submit, and
+// each case study's footer CTA.
 // ---------------------------------------------------------------------------
 .cta {
    display: inline-flex;
    align-items: center;
+   gap: $space-2;
    padding: $space-3 $space-5;
    border: none;
    border-radius: $radius-pill;
    font-family: $font-body;
-   font-weight: $weight-medium;
    font-size: $font-size-body-md;
    cursor: pointer;
    transition:
@@ -61,13 +62,21 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
+   }
+
+   &[disabled] {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
    }
 }
 
 .cta--primary {
+   padding: 14px 30px;
    background: $color-copper;
    color: $color-umber;
+   font-weight: $weight-bold;
 
    &:hover {
       background: $color-copper-hover;
@@ -76,12 +85,60 @@
 }
 
 .cta--secondary {
-   border: $border-hairline;
+   padding: 13px 28px;
+   border: 1px solid rgba($color-copper, 0.55);
    color: $color-ivory;
+   font-weight: $weight-regular;
 
    &:hover {
-      border-color: $color-copper;
-      color: $color-copper;
+      border-color: $color-copper-hover;
+      transform: translateY(-3px) scale(1.02);
+   }
+}
+
+// Underline, no button chrome — in-body CTAs inside case studies and
+// process copy (e.g. "read the case study →"), not the generic prose link
+// (`.case-study__body a`, which underlines by default already).
+.cta--link {
+   display: inline-flex;
+   padding: 0 0 2px;
+   background: none;
+   border: none;
+   border-bottom: 1px solid rgba($color-copper, 0.4);
+   border-radius: 0;
+   color: $color-copper;
+   font-family: $font-mono;
+   font-size: 0.8125rem;
+
+   &:hover {
+      color: $color-copper-hover;
+      border-bottom-color: $color-copper-hover;
+   }
+}
+
+// Submitting/busy — distinct from the generic `[disabled]` fallback above
+// (more specific selector wins): translucent copper fill plus a spin
+// indicator, rather than a flat dimmed button, since this is the only
+// `[disabled]` state the app actually reaches (the contact form's submit
+// while its action is in flight).
+.cta--busy[disabled] {
+   opacity: 1;
+   background: rgba($color-copper, 0.55);
+   cursor: default;
+}
+
+.cta__spinner {
+   width: 14px;
+   height: 14px;
+   border: 2px solid rgba($color-umber, 0.35);
+   border-top-color: $color-umber;
+   border-radius: 50%;
+   animation: cta-spin 0.7s linear infinite;
+}
+
+@keyframes cta-spin {
+   to {
+      transform: rotate(360deg);
    }
 }
 
@@ -131,7 +188,7 @@
 
    &:focus-visible {
       outline: $border-accent;
-      outline-offset: $space-1;
+      outline-offset: $focus-ring-offset;
    }
 }
 
@@ -190,6 +247,10 @@
 @media (prefers-reduced-motion: reduce) {
    .cta {
       transition: none;
+   }
+
+   .cta__spinner {
+      animation: none;
    }
 }
 

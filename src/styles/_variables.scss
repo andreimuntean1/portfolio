@@ -122,7 +122,13 @@ $space-8: 64px;
 // Borders
 // ---------------------------------------------------------------------------
 $border-hairline: 1px solid $color-seam;
-$border-accent:   1.5px solid $color-copper;
+$border-accent:   2px solid $color-copper; // Task 19 — matches the export's universal focus ring (was 1.5px)
+
+// Task 19 — the export's `:focus-visible{outline:2px solid #c5854e;outline-offset:3px}`
+// is the one universal rule repeated verbatim in every page's helmet; every
+// `$border-accent` call site pairs it with this rather than the spacing
+// scale's $space-1 (4px), which was an unvalidated Task 3 guess.
+$focus-ring-offset: 3px;
 
 // ---------------------------------------------------------------------------
 // Breakpoints — single mobile/desktop split (nav disclosure, footer column
