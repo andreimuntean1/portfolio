@@ -20,6 +20,11 @@ $color-copper-hover: #d99a63; // copper on hover/active
 $color-text-muted: rgba(241, 232, 216, 0.72); // ~#c2b5a2, body copy on umber/bench
 $color-text-faint:  rgba(241, 232, 216, 0.55); // labels, meta, margin notes
 
+// Task 19 addition — warm terracotta, same oklch family as copper rather than
+// an alarm red, so form-field/validation errors read as "off" without
+// clashing with the accent. Form-field-only for now (MOCKUP §1.7).
+$color-terracotta: #c97a5c;
+
 $color-map: (
   "umber": $color-umber,
   "bench": $color-bench,
@@ -48,9 +53,12 @@ $weight-regular: 400;
 $weight-medium:  500; // Apfel Grotezk "Mittel"
 $weight-bold:    700; // Apfel Grotezk "Fett" / Basteleur "Bold"
 
-// Type scale — fluid-friendly base sizes (rem). Adjust per breakpoint in consumer.
-$font-size-display-lg: 2.75rem;  // ~44px hero/section headlines
-$font-size-display-md: 2.125rem; // ~34px card/subsection headlines
+// Type scale — Task 19 moved the two display sizes to fluid `clamp()`
+// expressions (matching the design pass verbatim, consistent across every
+// page it touches); the rest of the scale wasn't refined by the design and
+// stays fixed.
+$font-size-display-lg: clamp(2.5rem, 5.5vw, 4rem);   // interior-page headlines
+$font-size-display-md: clamp(1.6rem, 2.4vw, 2.125rem); // card/subsection headlines
 $font-size-body-lg:    1rem;     // ~16px lead body copy
 $font-size-body-md:    0.875rem; // ~14px default body copy
 $font-size-label:      0.75rem;  // ~12px eyebrow labels, section numerals
@@ -73,6 +81,7 @@ $radius-sm:  10px; // palette swatches, small chips
 $radius-md:  14px; // cards, panels, secondary buttons
 $radius-lg:  20px; // outer card / section containers
 $radius-pill: 999px; // primary buttons, pill badges, direction tags
+$radius-input: 12px; // Task 19 — form fields specifically (Components/Contact)
 
 // ---------------------------------------------------------------------------
 // Motion — "Handset"
@@ -104,8 +113,10 @@ $border-hairline: 1px solid $color-seam;
 $border-accent:   1.5px solid $color-copper;
 
 // ---------------------------------------------------------------------------
-// Breakpoints — single mobile/desktop split for now (nav disclosure, footer
-// column stacking). Expand into a full scale if the Task 19 design pass
-// needs more steps.
+// Breakpoints — single mobile/desktop split (nav disclosure, footer column
+// stacking). MOCKUP §1.8 left the exact number open pending the design
+// pass ("adjust if a design naturally wants something else"); Task 19
+// settled on one hard breakpoint at 800px, everything else reflows
+// intrinsically (auto-fit grids, fluid type).
 // ---------------------------------------------------------------------------
-$breakpoint-md: 48rem; // ~768px
+$breakpoint-md: 50rem; // 800px
