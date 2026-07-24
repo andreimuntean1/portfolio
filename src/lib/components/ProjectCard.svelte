@@ -38,6 +38,20 @@
    const titleTag = $derived(`h${headingLevel}` as const);
 </script>
 
+{#snippet ledgerRow()}
+   <div class="card__ledger-row">
+      {#if project.entryNo !== undefined}
+         <span class="card__ledger" aria-hidden="true"
+            >№ {String(project.entryNo).padStart(3, '0')}</span
+         >
+      {/if}
+      <span class="card__status card__status--{project.status}">
+         <span class="card__status-dot" aria-hidden="true"></span>
+         {statusLabel}
+      </span>
+   </div>
+{/snippet}
+
 {#snippet stack()}
    <ul class="card__stack">
       {#each project.stack as tech (tech)}
@@ -48,6 +62,7 @@
 
 {#if variant === 'flagship' && project.tier === 'flagship'}
    <a class="card card--flagship" href={caseStudyHref} use:reveal>
+      {@render ledgerRow()}
       <svelte:element
          this={titleTag}
          class="card__title"
@@ -59,60 +74,63 @@
       {#if project.metrics}
          <Metrics items={project.metrics} />
       {/if}
-      {@render stack()}
-      <span class="card__status card__status--{project.status}">{statusLabel}</span>
+      <div class="card__footer">
+         {@render stack()}
+         <span class="card__case-study-link">{m.card_case_study({}, { locale })}</span>
+      </div>
    </a>
 {:else}
-   <article class="card card--entry" use:reveal>
-      {#if project.entryNo !== undefined}
-         <p class="card__ledger">№ {String(project.entryNo).padStart(3, '0')}</p>
-      {/if}
-      <h3 class="card__title">{project.title}</h3>
-      <p class="card__year">{project.year}</p>
+   <article class="card card--entry card--{project.status}" use:reveal>
+      {@render ledgerRow()}
+      <div class="card__heading-row">
+         <h3 class="card__title">{project.title}</h3>
+         <p class="card__year">{project.year}</p>
+      </div>
       <p class="card__summary">{project.summary}</p>
-      {@render stack()}
-      {#if project.status !== 'shipped'}
-         <span class="card__status card__status--{project.status}">{statusLabel}</span>
-      {/if}
-      {#if project.links.demo || project.links.github || project.links.figma}
-         <ul class="card__links">
-            {#if project.links.demo}
-               <li>
-                  <a
-                     class="card__link"
-                     href={project.links.demo}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     Demo
-                  </a>
-               </li>
-            {/if}
-            {#if project.links.github}
-               <li>
-                  <a
-                     class="card__link"
-                     href={project.links.github}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     GitHub
-                  </a>
-               </li>
-            {/if}
-            {#if project.links.figma}
-               <li>
-                  <a
-                     class="card__link"
-                     href={project.links.figma}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     Figma
-                  </a>
-               </li>
-            {/if}
-         </ul>
-      {/if}
+      <div class="card__footer">
+         {@render stack()}
+         {#if project.links.demo || project.links.github || project.links.figma}
+            <ul class="card__links">
+               {#if project.links.demo}
+                  <li>
+                     <a
+                        class="card__link"
+                        href={project.links.demo}
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                     >
+                        demo ↗
+                     </a>
+                  </li>
+               {/if}
+               {#if project.links.github}
+                  <li>
+                     <a
+                        class="card__link"
+                        href={project.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                     >
+                        github ↗
+                     </a>
+                  </li>
+               {/if}
+               {#if project.links.figma}
+                  <li>
+                     <a
+                        class="card__link"
+                        href={project.links.figma}
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                     >
+                        figma ↗
+                     </a>
+                  </li>
+               {/if}
+            </ul>
+         {:else}
+            <span class="card__no-link">{m.card_no_link_yet({}, { locale })}</span>
+         {/if}
+      </div>
    </article>
 {/if}

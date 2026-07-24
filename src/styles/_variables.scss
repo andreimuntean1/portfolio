@@ -34,7 +34,11 @@ $color-terracotta: #c97a5c;
 // export, not a misapplication here). Recalculated to the nearest opacity
 // that clears 4.5:1, which lands close to $color-text-faint — there isn't
 // much room below .55 for ivory-on-umber small text to stay compliant.
-$color-text-dim:   rgba(241, 232, 216, 0.52); // ~4.83:1
+// Verified against $color-umber only — a lighter surface underneath (e.g.
+// $color-bench, as on cards) pushes the ratio back under 4.5:1 (axe caught
+// this too, on ProjectCard's ledger numeral/year), so don't reuse these two
+// on anything but the umber canvas; prefer $color-text-faint there instead.
+$color-text-dim:   rgba(241, 232, 216, 0.52); // ~4.83:1 on $color-umber only
 $color-text-ghost: rgba(241, 232, 216, 0.5);  // ~4.57:1
 
 $color-map: (

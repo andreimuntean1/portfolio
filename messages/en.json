@@ -33,6 +33,8 @@
    "status_shipped": "Shipped",
    "status_in_workshop": "In the workshop",
    "status_retired": "Retired",
+   "card_no_link_yet": "coming soon — no link yet",
+   "card_case_study": "case study →",
    "work_flagships_heading": "Flagship projects",
    "work_entries_heading": "Workshop entries",
    "home_eyebrow": "from the workshop of Andrei Muntean",
