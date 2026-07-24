@@ -59,68 +59,95 @@
 
 <article class="case-study">
    <header class="case-study__header" use:reveal>
-      {#if data.project.client}
-         <p class="case-study__client">{data.project.client}</p>
+      {#if data.project.entryNo !== undefined}
+         <p class="case-study__eyebrow hero__eyebrow--ink" use:reveal>
+            <span class="case-study__eyebrow-rule" aria-hidden="true"></span>
+            {m.case_eyebrow({ num: String(data.project.entryNo).padStart(3, '0') }, { locale })}
+         </p>
       {/if}
       <h1 class="case-study__title" style:view-transition-name={'title-' + data.project.slug}>
          {data.project.title}
       </h1>
       <p class="case-study__summary">{data.project.summary}</p>
+
       <div class="case-study__meta">
-         <span class="case-study__year">{data.project.year}</span>
-         <span class="case-study__role">{data.project.role}</span>
-         <ul class="case-study__stack">
-            {#each data.project.stack as tech (tech)}
-               <li class="case-study__stack-tag">{tech}</li>
-            {/each}
-         </ul>
-         {#if data.project.timeline}
-            <span class="case-study__timeline">{data.project.timeline}</span>
+         {#if data.project.client}
+            <div class="case-study__meta-cell">
+               <span class="case-study__meta-label">{m.case_client({}, { locale })}</span>
+               <span class="case-study__meta-value">{data.project.client}</span>
+            </div>
          {/if}
-         <span class="case-study__status case-study__status--{data.project.status}">
-            {statusLabel}
-         </span>
+         <div class="case-study__meta-cell">
+            <span class="case-study__meta-label">{m.case_year({}, { locale })}</span>
+            <span class="case-study__meta-value">{data.project.year}</span>
+         </div>
+         <div class="case-study__meta-cell">
+            <span class="case-study__meta-label">{m.case_role({}, { locale })}</span>
+            <span class="case-study__meta-value">{data.project.role}</span>
+         </div>
+         {#if data.project.timeline}
+            <div class="case-study__meta-cell">
+               <span class="case-study__meta-label">{m.case_timeline({}, { locale })}</span>
+               <span class="case-study__meta-value">{data.project.timeline}</span>
+            </div>
+         {/if}
+         <div class="case-study__meta-cell">
+            <span class="case-study__meta-label">{m.case_status({}, { locale })}</span>
+            <span class="case-study__status case-study__status--{data.project.status}">
+               <span class="case-study__status-dot" aria-hidden="true"></span>
+               {statusLabel}
+            </span>
+         </div>
+         {#if data.project.links.demo || data.project.links.github || data.project.links.figma}
+            <div class="case-study__meta-cell">
+               <span class="case-study__meta-label">{m.case_links({}, { locale })}</span>
+               <ul class="case-study__links">
+                  {#if data.project.links.demo}
+                     <li>
+                        <a
+                           class="case-study__link"
+                           href={data.project.links.demo}
+                           target="_blank"
+                           rel="noopener noreferrer external"
+                        >
+                           {m.case_link_demo({}, { locale })}
+                        </a>
+                     </li>
+                  {/if}
+                  {#if data.project.links.github}
+                     <li>
+                        <a
+                           class="case-study__link"
+                           href={data.project.links.github}
+                           target="_blank"
+                           rel="noopener noreferrer external"
+                        >
+                           GitHub
+                        </a>
+                     </li>
+                  {/if}
+                  {#if data.project.links.figma}
+                     <li>
+                        <a
+                           class="case-study__link"
+                           href={data.project.links.figma}
+                           target="_blank"
+                           rel="noopener noreferrer external"
+                        >
+                           Figma
+                        </a>
+                     </li>
+                  {/if}
+               </ul>
+            </div>
+         {/if}
       </div>
-      {#if data.project.links.demo || data.project.links.github || data.project.links.figma}
-         <ul class="case-study__links">
-            {#if data.project.links.demo}
-               <li>
-                  <a
-                     class="case-study__link"
-                     href={data.project.links.demo}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     Demo
-                  </a>
-               </li>
-            {/if}
-            {#if data.project.links.github}
-               <li>
-                  <a
-                     class="case-study__link"
-                     href={data.project.links.github}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     GitHub
-                  </a>
-               </li>
-            {/if}
-            {#if data.project.links.figma}
-               <li>
-                  <a
-                     class="case-study__link"
-                     href={data.project.links.figma}
-                     target="_blank"
-                     rel="noopener noreferrer external"
-                  >
-                     Figma
-                  </a>
-               </li>
-            {/if}
-         </ul>
-      {/if}
+      <div class="case-study__stack-row">
+         <span class="case-study__stack-label">{m.case_stack({}, { locale })}</span>
+         {#each data.project.stack as tech (tech)}
+            <span class="case-study__stack-tag">{tech}</span>
+         {/each}
+      </div>
    </header>
 
    {#if data.project.metrics}
