@@ -25,6 +25,18 @@ $color-text-faint:  rgba(241, 232, 216, 0.55); // labels, meta, margin notes
 // clashing with the accent. Form-field-only for now (MOCKUP §1.7).
 $color-terracotta: #c97a5c;
 
+// Task 19 additions — the design export uses two more ivory-opacity steps as
+// heavily and consistently as the two above (~60 uses each, same class as
+// $color-text-muted/-faint): inactive-but-interactive text (locale switcher's
+// non-current option) and the dimmest tier (mobile-menu numerals, meta rows).
+// Not the export's literal .45/.4 — axe caught those failing WCAG AA small-
+// text contrast against $color-umber (3.9:1, needs 4.5:1; a real bug in the
+// export, not a misapplication here). Recalculated to the nearest opacity
+// that clears 4.5:1, which lands close to $color-text-faint — there isn't
+// much room below .55 for ivory-on-umber small text to stay compliant.
+$color-text-dim:   rgba(241, 232, 216, 0.52); // ~4.83:1
+$color-text-ghost: rgba(241, 232, 216, 0.5);  // ~4.57:1
+
 $color-map: (
   "umber": $color-umber,
   "bench": $color-bench,

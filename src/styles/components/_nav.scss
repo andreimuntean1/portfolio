@@ -2,20 +2,21 @@
 
 // ---------------------------------------------------------------------------
 // Skip link — hidden until keyboard focus, then the first visible thing on
-// the page (WCAG 2.4.1 bypass-blocks). Restyled in the Task 19 design pass.
+// the page (WCAG 2.4.1 bypass-blocks). Task 19 design pass.
 // ---------------------------------------------------------------------------
 .skip-link {
-   position: absolute;
-   top: $space-2;
-   left: $space-2;
-   z-index: 100;
-   padding: $space-2 $space-4;
+   position: fixed;
+   top: 14px;
+   left: 14px;
+   z-index: 300;
+   padding: $space-3 $space-5;
    background: $color-copper;
    color: $color-umber;
-   font-family: $font-mono;
+   font-family: $font-body;
+   font-weight: $weight-bold;
    font-size: $font-size-body-md;
-   border-radius: $radius-sm;
-   transform: translateY(-200%);
+   border-radius: $radius-pill;
+   transform: translateY(-90px);
    transition: transform $duration-interactive $ease-spring;
 
    &:focus {
@@ -24,25 +25,37 @@
 }
 
 // ---------------------------------------------------------------------------
-// Nav — persistent site header. Two independent copies of the same link
-// list (see `SiteNav.svelte`'s `navLinks` snippet): `.nav__panel` inside a
-// native `<details>` disclosure for mobile, `.nav__links` as a plain
-// always-visible row for desktop. Only one is ever displayed at a time
-// (toggled by the breakpoint below), so exactly one reaches the
-// accessibility tree. This costs a little markup duplication but keeps
-// both layouts plain, ordinary flex — no JS, and no reliance on forcing a
-// closed `<details>` open via CSS (that route hit a real Chromium/WebKit
-// bug: a flex item promoted through a `display: contents` ancestor
-// collapses to a zero-size box that paints its children in the right place
-// but hit-tests as unclickable).
+// Nav — persistent, sticky site header. Task 19's decision log settled the
+// brief's open "scroll behavior" question as "quieter than the old site —
+// solid umber with a hairline seam, no blur, flat chrome": a fixed
+// background, not a scroll-triggered one, so no JS/state is needed for it.
+// Two independent copies of the link list (see `SiteNav.svelte`): a
+// `.nav__panel-link` fullscreen list inside a native `<details>` disclosure
+// for mobile, `.nav__link` as a plain always-visible row for desktop. Only
+// one is ever displayed at a time (toggled by the breakpoint below), so
+// exactly one reaches the accessibility tree — kept as plain `<details>`
+// rather than JS-managed open state (matches the "no new logic" constraint
+// on this pass) and avoids a real Chromium/WebKit bug hit earlier: a flex
+// item promoted through a `display: contents` ancestor collapses to a
+// zero-size box that paints its children in the right place but hit-tests
+// as unclickable.
 // ---------------------------------------------------------------------------
 .nav {
+   position: sticky;
+   top: 0;
+   z-index: 100;
+   background: $color-umber;
+   border-bottom: $border-hairline;
+}
+
+.nav__inner {
    display: flex;
    align-items: center;
    justify-content: space-between;
    gap: $space-4;
-   padding: $space-4 $space-5;
-   border-bottom: $border-hairline;
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: 15px clamp(20px, 4.5vw, 48px);
 }
 
 .nav__links {
@@ -58,6 +71,10 @@
       outline: $border-accent;
       outline-offset: $space-1;
    }
+
+   &:hover .nav__wordmark svg {
+      fill: $color-copper-hover;
+   }
 }
 
 .nav__wordmark {
@@ -67,69 +84,30 @@
       display: block;
       width: auto;
       height: $space-6;
+      transition: fill $duration-interactive $ease-spring;
    }
-}
-
-.nav__disclosure {
-   position: relative;
-}
-
-.nav__disclosure-toggle {
-   padding: $space-2 $space-3;
-   list-style: none;
-   font-family: $font-mono;
-   font-size: $font-size-body-md;
-   color: $color-ivory;
-   cursor: pointer;
-
-   &::-webkit-details-marker {
-      display: none;
-   }
-
-   &:focus-visible {
-      outline: $border-accent;
-      outline-offset: $space-1;
-   }
-}
-
-.nav__panel {
-   position: absolute;
-   right: 0;
-   z-index: 10;
-   flex-direction: column;
-   gap: $space-4;
-   padding: $space-4;
-   background: $color-bench;
-   border: $border-hairline;
-   border-radius: $radius-md;
-}
-
-// `display` deliberately lives here, scoped to `[open]`, rather than
-// unconditionally on `.nav__panel` above: browsers hide a closed
-// `<details>`'s non-summary children via their own UA stylesheet, and an
-// unconditional `display: flex` from us would (author origin beats
-// user-agent origin regardless of specificity) defeat that native
-// collapse — the menu would render permanently open.
-.nav__disclosure[open] .nav__panel {
-   display: flex;
 }
 
 .nav__list {
    display: flex;
-   flex-direction: column;
-   gap: $space-3;
+   align-items: center;
+   gap: clamp(18px, 2.6vw, 34px);
    margin: 0;
    padding: 0;
    list-style: none;
 }
 
 .nav__link {
+   position: relative;
+   padding: $space-1 0;
    font-family: $font-body;
-   font-size: $font-size-body-md;
+   font-size: $font-size-body-lg;
+   letter-spacing: 0.01em;
    color: $color-text-muted;
+   transition: color $duration-interactive $ease-spring;
 
    &:hover {
-      color: $color-copper;
+      color: $color-ivory;
    }
 
    &:focus-visible {
@@ -139,17 +117,33 @@
 
    &[aria-current='page'] {
       color: $color-copper;
-      font-weight: $weight-medium;
+
+      &::after {
+         content: '';
+         position: absolute;
+         left: 50%;
+         bottom: -8px;
+         width: 4px;
+         height: 4px;
+         border-radius: 50%;
+         background: $color-copper;
+         transform: translateX(-50%);
+      }
    }
+}
+
+.nav__divider {
+   width: 1px;
+   height: 18px;
+   background: $color-seam;
 }
 
 .nav__locale {
    display: inline-flex;
-   gap: $space-1;
+   gap: 11px;
    font-family: $font-mono;
    font-size: $font-size-label;
-   letter-spacing: $letter-spacing-label;
-   color: $color-text-faint;
+   letter-spacing: 0.08em;
 
    &:focus-visible {
       outline: $border-accent;
@@ -157,12 +151,185 @@
    }
 }
 
-.nav__locale-option[aria-current] {
-   color: $color-copper;
+.nav__locale-option {
+   padding-bottom: 2px;
+   color: $color-text-dim;
+   border-bottom: 1px solid transparent;
+
+   &[aria-current] {
+      color: $color-copper;
+      border-bottom-color: $color-copper;
+   }
+}
+
+.nav__locale:hover .nav__locale-option:not([aria-current]) {
+   color: $color-copper-hover;
+}
+
+.nav__locale--panel {
+   gap: $space-4;
+   font-size: $font-size-body-md;
+}
+
+// ---------------------------------------------------------------------------
+// Mobile disclosure — hamburger toggle (pure-CSS pseudo-element bars, no
+// icon asset) opening a fullscreen overlay panel.
+// ---------------------------------------------------------------------------
+.nav__disclosure {
+   position: relative;
+}
+
+.nav__disclosure-toggle {
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 44px;
+   height: 40px;
+   background: rgba($color-walnut, 0.6);
+   border: $border-hairline;
+   border-radius: $radius-sm;
+   cursor: pointer;
+   list-style: none;
+
+   &::-webkit-details-marker {
+      display: none;
+   }
+
+   &::before,
+   &::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      border-radius: 2px;
+      background: $color-ivory;
+      transition:
+         transform $duration-interactive $ease-spring,
+         background $duration-interactive $ease-spring;
+   }
+
+   &::before {
+      transform: translateY(-3.5px);
+   }
+
+   &::after {
+      transform: translateY(3.5px);
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.nav__disclosure[open] .nav__disclosure-toggle {
+   &::before {
+      background: $color-copper;
+      transform: rotate(45deg);
+   }
+
+   &::after {
+      background: $color-copper;
+      transform: rotate(-45deg);
+   }
+}
+
+// `display` deliberately lives here, scoped to `[open]`, rather than
+// unconditionally on `.nav__panel` above: browsers hide a closed
+// `<details>`'s non-summary children via their own UA stylesheet, and an
+// unconditional `display: flex` from us would (author origin beats
+// user-agent origin regardless of specificity) defeat that native
+// collapse — the menu would render permanently open.
+.nav__panel {
+   display: none;
+   position: fixed;
+   inset: 0;
+   z-index: 90;
+   flex-direction: column;
+   justify-content: center;
+   padding: 80px clamp(24px, 7vw, 48px) 48px;
+   background: rgba($color-umber, 0.98);
+}
+
+.nav__disclosure[open] .nav__panel {
+   display: flex;
+}
+
+.nav__panel-eyebrow {
+   margin: 0 0 $space-5;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.nav__panel-list {
+   display: flex;
+   flex-direction: column;
+   gap: $space-1;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+}
+
+.nav__panel-link {
+   display: block;
+   padding: $space-3 0;
+   font-family: $font-display;
+   font-weight: $weight-bold;
+   font-size: 2.1rem;
+   letter-spacing: -0.01em;
+   color: $color-ivory;
+   transition: color $duration-interactive $ease-spring;
+
+   &:hover {
+      color: $color-copper-hover;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+
+   &[aria-current='page'] {
+      color: $color-copper;
+   }
+}
+
+.nav__panel-link-num {
+   margin-right: $space-4;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: 0.14em;
+   color: $color-text-ghost;
+   vertical-align: middle;
+}
+
+.nav__panel-footer {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: $space-6;
+   padding-top: $space-5;
+   border-top: $border-hairline;
+}
+
+.nav__panel-availability {
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: 0.06em;
+   color: $color-text-ghost;
 }
 
 @media (prefers-reduced-motion: reduce) {
-   .skip-link {
+   .skip-link,
+   .nav__wordmark svg,
+   .nav__link,
+   .nav__disclosure-toggle::before,
+   .nav__disclosure-toggle::after,
+   .nav__panel-link {
       transition: none;
    }
 }
@@ -174,10 +341,5 @@
 
    .nav__links {
       display: flex;
-   }
-
-   .nav__links .nav__list {
-      flex-direction: row;
-      align-items: center;
    }
 }
