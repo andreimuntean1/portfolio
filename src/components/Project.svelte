@@ -1,6 +1,9 @@
 <script lang="ts">
   interface Links {
     demo?: string;
+    demoLabel?: string;
+    secondary?: string;
+    secondaryLabel?: string;
     figma?: string;
     github?: string;
   }
@@ -19,11 +22,16 @@
     <h2>{title}</h2>
   </div>
   <p>{description}</p>
-  {#if links.demo || links.figma || links.github}
+  {#if links.demo || links.secondary || links.figma || links.github}
     <div class="buttons">
-      {#if links.demo}
-        <a href={links.demo} target="_blank" class="live">See live</a>
-      {/if}
+      <div class="actions">
+        {#if links.demo}
+          <a href={links.demo} target="_blank" class="live">{links.demoLabel ?? "See live"}</a>
+        {/if}
+        {#if links.secondary}
+          <a href={links.secondary} target="_blank" class="secondary">{links.secondaryLabel ?? "See more"}</a>
+        {/if}
+      </div>
       <div class="source">
         {#if links.figma}
           <a href={links.figma} target="_blank">
@@ -157,8 +165,59 @@
       justify-content: space-between;
       align-items: center;
       height: fit-content;
+      gap: 16px;
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        // Two buttons in one card need tighter padding so the hover growth
+        // still fits inside the card.
+        &:has(.secondary) a {
+          padding: 7px 22px;
+
+          &:hover {
+            padding: 10px 28px;
+          }
+
+          @media screen and (max-width: 280px) {
+            padding: 6px 16px;
+
+            &:hover {
+              padding: 8px 20px;
+            }
+          }
+        }
+      }
+
+      a.secondary {
+        background: rgba(0, 6, 10, 0.5);
+        color: rgba(255, 255, 255, 0.65);
+        height: min-content;
+        padding: 7px 36px;
+        border-radius: 35px;
+        font-size: 0.875rem;
+        font-family: "Onest", sans-serif;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          padding 0.3s,
+          color 0.3s;
+        white-space: nowrap;
+
+        @media screen and (max-width: 280px) {
+          font-size: 0.75rem;
+          padding: 6px 24px;
+        }
+
+        &:hover {
+          color: white;
+        }
+      }
 
       a.live {
+        white-space: nowrap;
         background: #d9d9d9;
         height: min-content;
         padding: 7px 36px;
