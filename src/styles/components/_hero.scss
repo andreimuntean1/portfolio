@@ -1,34 +1,75 @@
 @use '../variables' as *;
 
 // ---------------------------------------------------------------------------
-// Home page — functional/token-plain per Task 9 (Phase 4 note: the design
-// pass lands in Task 19). Houses every block on `/`: hero, featured-work
-// grid, process strip, trust band, contact teaser — same one-file-per-route
-// grouping already used by `_footer.scss` (footer + availability).
+// Home page (`/`, MOCKUP §3.1, Task 19 design pass) — hero, featured-work
+// grid, condensed process rail, trust band, contact teaser — same
+// one-file-per-route grouping already used by `_footer.scss` (footer +
+// availability). Also houses the shared `.cta` button system, first
+// introduced here in Task 9 and reused across the whole site.
 // ---------------------------------------------------------------------------
 .hero {
+   position: relative;
+   overflow: hidden;
+}
+
+// Oversized watermark "am" behind the hero copy — decorative, at 4% opacity,
+// so it never competes with the real text (MOCKUP §3.1, Home.dc.html).
+.hero::before {
+   content: 'am';
+   position: absolute;
+   top: -12%;
+   right: -3%;
+   font-family: $font-display;
+   font-weight: $weight-regular;
+   font-size: clamp(220px, 32vw, 460px);
+   line-height: 1;
+   letter-spacing: $letter-spacing-wordmark;
+   color: rgba($color-ivory, 0.04);
+   pointer-events: none;
+}
+
+.hero__inner {
+   position: relative;
    display: flex;
    flex-direction: column;
    gap: $space-4;
-   padding: $space-8 $space-5 $space-7;
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(64px, 11vw, 132px) clamp(20px, 4.5vw, 48px) clamp(56px, 8vw, 96px);
 }
 
 .hero__eyebrow {
+   display: flex;
+   align-items: center;
+   gap: $space-3;
    font-family: $font-mono;
    font-size: $font-size-label;
    letter-spacing: $letter-spacing-label;
    text-transform: uppercase;
-   color: $color-text-faint;
+   color: $color-copper;
+}
+
+.hero__eyebrow-rule {
+   width: 28px;
+   height: 1px;
+   background: $color-copper;
 }
 
 .hero__headline {
-   max-width: 24ch;
+   max-width: 15ch;
    font-size: $font-size-display-lg;
+   letter-spacing: -0.01em;
+   text-wrap: balance;
+}
+
+.hero__headline-accent {
+   color: $color-copper;
 }
 
 .hero__support {
-   max-width: 40ch;
-   font-size: $font-size-body-lg;
+   max-width: 52ch;
+   font-size: $font-size-lede;
+   line-height: $line-height-body;
    color: $color-text-muted;
 }
 
@@ -146,18 +187,9 @@
 // Featured work — 3 flagship `ProjectCard`s.
 // ---------------------------------------------------------------------------
 .featured {
-   padding: $space-7 $space-5;
-   border-top: $border-hairline;
-}
-
-.featured__heading {
-   margin-bottom: $space-5;
-   font-family: $font-mono;
-   font-size: $font-size-label;
-   font-weight: $weight-regular;
-   letter-spacing: $letter-spacing-label;
-   text-transform: uppercase;
-   color: $color-text-faint;
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(24px, 4vw, 48px) clamp(20px, 4.5vw, 48px) 0;
 }
 
 .featured__grid {
@@ -166,82 +198,162 @@
 }
 
 // ---------------------------------------------------------------------------
-// Process strip — condensed Discovery → Build → Handover, heading links
-// through to /process (MOCKUP §3.1.3).
+// Home process — condensed Discovery/Build/Verify/Handover rail, distinct
+// four-step breakdown from the full /process page's own steps (MOCKUP
+// §3.1.3 links through to it rather than duplicating it). Each step is a
+// dot-on-a-rail; the rail bleeds into the grid gap via a negative right
+// offset so it reads as one continuous line, except the last step, whose
+// filled dot and full-width rail mark the end.
 // ---------------------------------------------------------------------------
-.process-strip {
-   padding: $space-7 $space-5;
-   border-top: $border-hairline;
+.home-process {
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(64px, 9vw, 110px) clamp(20px, 4.5vw, 48px) 0;
 }
 
-.process-strip__heading {
-   margin-bottom: $space-5;
-   font-size: $font-size-display-md;
-}
-
-.process-strip__link {
-   color: inherit;
-
-   &:hover {
-      color: $color-copper;
-   }
-
-   &:focus-visible {
-      outline: $border-accent;
-      outline-offset: $focus-ring-offset;
-   }
-}
-
-.process-strip__list {
-   display: flex;
-   flex-direction: column;
-   gap: $space-4;
+.home-process__grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+   gap: 28px 22px;
    margin: 0;
    padding: 0;
    list-style: none;
-   counter-reset: process-step;
 }
 
-.process-strip__step {
+.home-process__step {
    position: relative;
-   padding-inline-start: $space-6;
-   font-size: $font-size-body-md;
-   color: $color-text-muted;
-   counter-increment: process-step;
+   padding-top: $space-5;
 
    &::before {
-      content: counter(process-step, decimal-leading-zero);
+      content: '';
       position: absolute;
-      inset-inline-start: 0;
-      font-family: $font-mono;
-      font-size: $font-size-label;
-      color: $color-copper;
+      top: 0;
+      left: 0;
+      right: -22px;
+      height: 1px;
+      background: $color-seam;
+   }
+
+   &::after {
+      content: '';
+      position: absolute;
+      top: -4.5px;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      box-sizing: border-box;
+      border: 2px solid $color-copper;
+      border-radius: 50%;
+      background: $color-umber;
+   }
+
+   &:last-child::before {
+      right: 0;
+   }
+
+   &:last-child::after {
+      border: none;
+      background: $color-copper;
    }
 }
 
-// ---------------------------------------------------------------------------
-// Trust band — client quotes from featured projects that have one. Renders
-// nothing today (no featured project has a seeded `quote`); markup stays
-// correct for when one does.
-// ---------------------------------------------------------------------------
-.trust-band {
-   display: flex;
-   flex-direction: column;
-   gap: $space-6;
-   padding: $space-7 $space-5;
-   border-top: $border-hairline;
+.home-process__num {
+   margin: 0 0 $space-2;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: 0.14em;
+   color: $color-text-faint;
+}
+
+.home-process__title {
+   margin: 0 0 $space-2;
+   font-weight: $weight-regular;
+   font-size: 1.375rem;
+}
+
+.home-process__body {
+   margin: 0;
+   font-size: $font-size-body-md;
+   line-height: $line-height-body;
+   color: $color-text-muted;
 }
 
 // ---------------------------------------------------------------------------
-// Contact teaser — availability restated + a CTA into /contact.
+// Trust band — client quotes. Illustrative placeholders (SPEC §15) until
+// real testimonials land at the content pass.
+// ---------------------------------------------------------------------------
+.trust-band {
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(64px, 9vw, 110px) clamp(20px, 4.5vw, 48px) 0;
+}
+
+.trust-band__grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+   gap: $space-5;
+}
+
+// ---------------------------------------------------------------------------
+// Contact teaser — bordered card, availability + heading + CTAs against a
+// decorative rotated roundel.
 // ---------------------------------------------------------------------------
 .contact-teaser {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: $space-6 $space-7;
+   max-width: 1240px;
+   margin: clamp(64px, 9vw, 110px) auto 0;
+   padding: clamp(28px, 4.5vw, 56px);
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-lg;
+}
+
+.contact-teaser__body {
+   flex: 1 1 380px;
    display: flex;
    flex-direction: column;
    align-items: flex-start;
    gap: $space-4;
-   padding: $space-7 $space-5 $space-8;
-   border-top: $border-hairline;
+}
+
+.contact-teaser__heading {
+   margin: 0;
+   font-size: $font-size-display-lg;
+   line-height: $line-height-snug;
+   text-wrap: balance;
+}
+
+.contact-teaser__support {
+   margin: 0;
+   max-width: 46ch;
+   font-size: $font-size-body-lg;
+   line-height: $line-height-body;
+   color: $color-text-muted;
+}
+
+.contact-teaser__actions {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin-top: $space-1;
+}
+
+.contact-teaser__mark {
+   flex: 0 0 auto;
+   display: block;
+   margin: 0 auto;
+   width: clamp(120px, 14vw, 168px);
+   height: clamp(120px, 14vw, 168px);
+   transform: rotate(-4deg);
+
+   svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+   }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -257,11 +369,5 @@
 @media (min-width: $breakpoint-md) {
    .featured__grid {
       grid-template-columns: repeat(3, 1fr);
-   }
-
-   .contact-teaser {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
    }
 }

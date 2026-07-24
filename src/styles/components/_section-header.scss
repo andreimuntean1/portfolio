@@ -1,0 +1,56 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// SectionHeader — numbered mono eyebrow + trailing rule + optional "see
+// more" link, repeated across nearly every page section in the design
+// export (Home, Work). `<h2>` regardless of call site: every page this
+// appears on has its own `<h1>` above it, one level up.
+// ---------------------------------------------------------------------------
+.section-header {
+   display: flex;
+   align-items: baseline;
+   gap: $space-4;
+   margin: 0 0 $space-6;
+}
+
+.section-header__heading {
+   margin: 0;
+   font-family: $font-mono;
+   font-weight: $weight-regular;
+   font-size: $font-size-micro;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-copper;
+   white-space: nowrap;
+}
+
+.section-header__num {
+   margin-right: 0.2em;
+}
+
+.section-header__rule {
+   flex: 1;
+   align-self: center;
+   height: 1px;
+   background: $color-seam;
+}
+
+.section-header__link {
+   padding-bottom: 2px;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: 0.04em;
+   color: rgba($color-copper, 0.9);
+   border-bottom: 1px solid rgba($color-copper, 0.4);
+   white-space: nowrap;
+
+   &:hover {
+      color: $color-copper-hover;
+      border-bottom-color: $color-copper-hover;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $focus-ring-offset;
+   }
+}
