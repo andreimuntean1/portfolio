@@ -59,7 +59,7 @@
   <div class="container about">
     <img
       src="profile.jpg"
-      alt="Andrei in the woods, smiling, wearing a light blue suit, white shirt and navy blue tie"
+      alt="Andrei, smiling, wearing glasses, a navy blue suit, white shirt and teal tie"
     />
     <div class="content">
       <p>
