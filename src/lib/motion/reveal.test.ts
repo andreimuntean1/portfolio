@@ -5,10 +5,11 @@ import { reveal } from './reveal';
 // the `*.svelte.test.ts` filename (`vite.config.ts`); plain `.test.ts` files
 // run under plain Node instead (no `window`/`document`). `reveal` only
 // touches a handful of globals (`window.matchMedia`/`setTimeout`/
-// `innerHeight`, `document.addEventListener`/`removeEventListener`/
-// `visibilityState`, `IntersectionObserver`) and a `classList`/
-// `getBoundingClientRect`-shaped node, so hand-rolled fakes of each are
-// simpler and faster than pulling in a full DOM for this.
+// `innerHeight`/`requestAnimationFrame`/`cancelAnimationFrame`,
+// `document.addEventListener`/`removeEventListener`/`visibilityState`,
+// `IntersectionObserver`) and a `classList`/`getBoundingClientRect`-shaped
+// node, so hand-rolled fakes of each are simpler and faster than pulling in
+// a full DOM for this.
 class FakeIntersectionObserver {
    public static instances: FakeIntersectionObserver[] = [];
 
@@ -33,7 +34,9 @@ class FakeIntersectionObserver {
 
 type FakeRect = { top: number; bottom: number; height: number };
 
-const createFakeNode = (rect: FakeRect = { top: 0, bottom: 100, height: 100 }): HTMLElement => {
+const IN_VIEW: FakeRect = { top: 100, bottom: 300, height: 200 };
+
+const createFakeNode = (rect: FakeRect = IN_VIEW): HTMLElement => {
    const classes = new Set<string>();
    const classList = {
       add: (name: string): void => {
@@ -46,10 +49,24 @@ const createFakeNode = (rect: FakeRect = { top: 0, bottom: 100, height: 100 }): 
 
    return {
       classList,
-      getBoundingClientRect: () => {
+      getBoundingClientRect: (): FakeRect => {
          return rect;
       },
    } as unknown as HTMLElement;
+};
+
+// Controllable `requestAnimationFrame` — reveal schedules two nested frames,
+// so tests drive them explicitly rather than relying on real timing.
+let rafQueue: FrameRequestCallback[] = [];
+
+const flushFrames = (count: number): void => {
+   for (let i = 0; i < count; i += 1) {
+      const pending = rafQueue;
+      rafQueue = [];
+      for (const cb of pending) {
+         cb(0);
+      }
+   }
 };
 
 // Fake `document` — tracks `visibilitychange` listeners so a test can fire
@@ -69,7 +86,7 @@ const createFakeDocument = () => {
             listeners.delete(handler);
          }
       },
-      get visibilityState() {
+      get visibilityState(): 'hidden' | 'visible' {
          return visibilityState;
       },
       setVisibilityState: (state: 'hidden' | 'visible'): void => {
@@ -97,14 +114,23 @@ const setReducedMotion = (matches: boolean): void => {
    vi.stubGlobal('window', {
       matchMedia,
       innerHeight: 800,
-      setTimeout: (handler: () => void, timeout?: number) => {
+      setTimeout: (handler: () => void, timeout?: number): ReturnType<typeof setTimeout> => {
          return globalThis.setTimeout(handler, timeout);
       },
+      clearTimeout: (id?: ReturnType<typeof setTimeout>): void => {
+         globalThis.clearTimeout(id);
+      },
+      requestAnimationFrame: (cb: FrameRequestCallback): number => {
+         rafQueue.push(cb);
+         return rafQueue.length;
+      },
+      cancelAnimationFrame: (): void => {},
    });
 };
 
 beforeEach(() => {
    FakeIntersectionObserver.instances = [];
+   rafQueue = [];
    vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
    fakeDocument = createFakeDocument();
    vi.stubGlobal('document', fakeDocument);
@@ -127,10 +153,36 @@ describe('reveal', () => {
       expect(node.classList.contains('is-revealed')).toBe(false);
    });
 
-   it('adds .is-revealed once the node intersects the viewport', () => {
-      const node = createFakeNode();
+   // The core fix: an already-in-view (above-the-fold) node reveals on its
+   // own after two animation frames, with no observer callback ever firing.
+   it('reveals in-view content on its own after two frames', () => {
+      const node = createFakeNode(IN_VIEW);
 
       reveal(node);
+      expect(node.classList.contains('is-revealed')).toBe(false);
+
+      flushFrames(2);
+      vi.runAllTimers();
+
+      expect(node.classList.contains('is-revealed')).toBe(true);
+   });
+
+   it('does not self-reveal below-the-fold content', () => {
+      // height 200, sits entirely below the 800px viewport.
+      const node = createFakeNode({ top: 900, bottom: 1100, height: 200 });
+
+      reveal(node);
+      flushFrames(2);
+      vi.runAllTimers();
+
+      expect(node.classList.contains('is-revealed')).toBe(false);
+   });
+
+   it('adds .is-revealed once a below-the-fold node scrolls into view', () => {
+      const node = createFakeNode({ top: 900, bottom: 1100, height: 200 });
+
+      reveal(node);
+      flushFrames(2);
       const [observer] = FakeIntersectionObserver.instances;
       observer.intersect(true);
       vi.runAllTimers();
@@ -140,7 +192,7 @@ describe('reveal', () => {
    });
 
    it('does not reveal on a non-intersecting entry', () => {
-      const node = createFakeNode();
+      const node = createFakeNode({ top: 900, bottom: 1100, height: 200 });
 
       reveal(node);
       const [observer] = FakeIntersectionObserver.instances;
@@ -151,11 +203,10 @@ describe('reveal', () => {
    });
 
    it('delays adding .is-revealed by the given option', () => {
-      const node = createFakeNode();
+      const node = createFakeNode(IN_VIEW);
 
       reveal(node, { delay: 120 });
-      const [observer] = FakeIntersectionObserver.instances;
-      observer.intersect(true);
+      flushFrames(2);
 
       vi.advanceTimersByTime(119);
       expect(node.classList.contains('is-revealed')).toBe(false);
@@ -175,26 +226,13 @@ describe('reveal', () => {
       expect(FakeIntersectionObserver.instances).toHaveLength(0);
    });
 
-   it('disconnects the observer on destroy', () => {
-      const node = createFakeNode();
-
-      const action = reveal(node) as { destroy(): void };
-      const [observer] = FakeIntersectionObserver.instances;
-
-      action.destroy();
-
-      expect(observer.disconnect).toHaveBeenCalledOnce();
-   });
-
-   // Regression coverage for the bug this fallback fixes: a page that loads
-   // while its tab is backgrounded/occluded never gets an intersection
-   // callback from Chromium, even after the tab becomes visible — confirmed
-   // directly against real Chrome, not assumed (see the action's own doc
-   // comment). Content must self-heal once the tab is actually looked at.
-   it('reveals on visibilitychange if the node already qualifies and the observer never fired', () => {
-      const node = createFakeNode({ top: 100, bottom: 300, height: 200 });
+   // Backstop for the tab-loaded-hidden case: frames are paused while hidden,
+   // so the reveal instead lands on the first visibilitychange to visible.
+   it('reveals in-view content on first visibilitychange when frames never ran', () => {
+      const node = createFakeNode(IN_VIEW);
 
       reveal(node);
+      // No flushFrames — simulates a hidden tab where rAF never ticked.
       fakeDocument.setVisibilityState('visible');
       fakeDocument.fireVisibilityChange();
       vi.runAllTimers();
@@ -202,36 +240,61 @@ describe('reveal', () => {
       expect(node.classList.contains('is-revealed')).toBe(true);
    });
 
-   it('does not reveal on visibilitychange if the node is not sufficiently in view', () => {
-      // height 200, only 20px (10%) within the fake 800px viewport — under
-      // the 0.2 threshold the real IntersectionObserver would also use.
-      const node = createFakeNode({ top: 780, bottom: 980, height: 200 });
+   it('ignores a visibilitychange that is still hidden (before the safety net)', () => {
+      const node = createFakeNode(IN_VIEW);
 
       reveal(node);
-      fakeDocument.setVisibilityState('visible');
+      fakeDocument.setVisibilityState('hidden');
       fakeDocument.fireVisibilityChange();
+      // Advance less than the safety-net delay: proves the hidden
+      // visibilitychange itself didn't reveal, without the timer masking it.
+      vi.advanceTimersByTime(100);
+
+      expect(node.classList.contains('is-revealed')).toBe(false);
+   });
+
+   // The guarantee: an in-view node reveals via the plain-timer safety net
+   // even when the tab never became visible and no frame ever ran (the
+   // permanently-backgrounded case), so content is never left clipped.
+   it('reveals in-view content via the safety-net timer, hidden and frame-less', () => {
+      const node = createFakeNode(IN_VIEW);
+
+      reveal(node);
+      // No flushFrames, no visibilitychange — nothing but the timer.
+      vi.runAllTimers();
+
+      expect(node.classList.contains('is-revealed')).toBe(true);
+   });
+
+   it('does not reveal below-the-fold content via the safety-net timer', () => {
+      const node = createFakeNode({ top: 900, bottom: 1100, height: 200 });
+
+      reveal(node);
       vi.runAllTimers();
 
       expect(node.classList.contains('is-revealed')).toBe(false);
    });
 
-   it('removes the visibilitychange listener once revealed via intersection', () => {
-      const node = createFakeNode();
+   it('tears down observer and visibilitychange listener once revealed', () => {
+      const node = createFakeNode(IN_VIEW);
 
       reveal(node);
+      flushFrames(2);
       const [observer] = FakeIntersectionObserver.instances;
-      observer.intersect(true);
-      vi.runAllTimers();
 
+      expect(observer.disconnect).toHaveBeenCalledOnce();
       expect(fakeDocument.listenerCount()).toBe(0);
    });
 
-   it('removes the visibilitychange listener on destroy', () => {
-      const node = createFakeNode();
+   it('disconnects the observer and removes the listener on destroy', () => {
+      const node = createFakeNode({ top: 900, bottom: 1100, height: 200 });
 
       const action = reveal(node) as { destroy(): void };
+      const [observer] = FakeIntersectionObserver.instances;
+
       action.destroy();
 
+      expect(observer.disconnect).toHaveBeenCalledOnce();
       expect(fakeDocument.listenerCount()).toBe(0);
    });
 });
