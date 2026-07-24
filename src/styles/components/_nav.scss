@@ -101,7 +101,7 @@
    position: relative;
    padding: $space-1 0;
    font-family: $font-body;
-   font-size: $font-size-body-lg;
+   font-size: $font-size-body;
    letter-spacing: 0.01em;
    color: $color-text-muted;
    transition: color $duration-interactive $ease-spring;
@@ -168,7 +168,7 @@
 
 .nav__locale--panel {
    gap: $space-4;
-   font-size: $font-size-body-md;
+   font-size: $font-size-small;
 }
 
 // ---------------------------------------------------------------------------

@@ -52,7 +52,7 @@
    border: none;
    border-radius: $radius-pill;
    font-family: $font-body;
-   font-size: $font-size-body-md;
+   font-size: $font-size-body;
    cursor: pointer;
    transition:
       transform $duration-interactive $ease-spring,
@@ -108,7 +108,7 @@
    border-radius: 0;
    color: $color-copper;
    font-family: $font-mono;
-   font-size: 0.8125rem;
+   font-size: $font-size-small;
 
    &:hover {
       color: $color-copper-hover;
