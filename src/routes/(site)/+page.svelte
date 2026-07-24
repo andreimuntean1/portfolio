@@ -7,6 +7,7 @@
    import Quote from '$lib/components/mdx/Quote.svelte';
    import Seo from '$lib/seo/Seo.svelte';
    import { jsonLdPerson } from '$lib/seo/meta';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -29,8 +30,10 @@
 <Seo description={m.home_support({}, { locale })} pageId="home" jsonLd={[jsonLdPerson()]} />
 
 <section class="hero">
-   <p class="hero__eyebrow">{m.home_eyebrow({}, { locale })}</p>
-   <h1 class="hero__headline">{m.home_headline({}, { locale })}</h1>
+   <p class="hero__eyebrow hero__eyebrow--ink" use:reveal>{m.home_eyebrow({}, { locale })}</p>
+   <h1 class="hero__headline hero__headline--ink" use:reveal>
+      {m.home_headline({}, { locale })}
+   </h1>
    <p class="hero__support">{m.home_support({}, { locale })}</p>
    <Availability />
    <div class="hero__actions">
@@ -43,7 +46,7 @@
    </div>
 </section>
 
-<section class="featured" aria-labelledby="featured-heading">
+<section class="featured" aria-labelledby="featured-heading" use:reveal>
    <h2 class="featured__heading" id="featured-heading">
       {m.work_flagships_heading({}, { locale })}
    </h2>
@@ -54,7 +57,7 @@
    </div>
 </section>
 
-<section class="process-strip" aria-labelledby="process-heading">
+<section class="process-strip" aria-labelledby="process-heading" use:reveal>
    <h2 class="process-strip__heading" id="process-heading">
       <a class="process-strip__link" href={resolvedHref(localizeHref('/process', { locale }))}>
          {m.nav_process({}, { locale })}
@@ -68,7 +71,7 @@
 </section>
 
 {#if quotedProjects.length > 0}
-   <div class="trust-band">
+   <div class="trust-band" use:reveal>
       {#each quotedProjects as project (project.slug)}
          {#if project.quote}
             <Quote
@@ -81,7 +84,7 @@
    </div>
 {/if}
 
-<section class="contact-teaser">
+<section class="contact-teaser" use:reveal>
    <Availability />
    <a class="cta cta--primary" href={resolvedHref(localizeHref('/contact', { locale }))}>
       {m.cta_get_in_touch({}, { locale })}

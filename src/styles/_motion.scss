@@ -1,3 +1,109 @@
-// Motion layer — placeholder. Reduced-motion-gated transition/animation
-// utilities land here in a later task; kept as an explicit ITCSS layer now
-// so main.scss's @use order doesn't change when it's filled in.
+@use 'variables' as *;
+
+// ---------------------------------------------------------------------------
+// Motion layer (Task 18, MOCKUP/SPEC §10 "Handset" motion system) — the
+// `reveal` Svelte action (`$lib/motion/reveal.ts`) adds `.reveal` to a node
+// immediately, then `.is-revealed` once it scrolls into view (or right away
+// under reduced motion / no `IntersectionObserver`). Everything below reads
+// that pairing; the three signature moments each override the generic
+// fade/rise with their own transform so they read as distinct beats rather
+// than one repeated animation.
+// ---------------------------------------------------------------------------
+.reveal {
+   opacity: 0;
+   transform: translateY($space-3);
+   transition:
+      opacity $duration-interactive $ease-spring,
+      transform $duration-interactive $ease-spring;
+
+   &.is-revealed {
+      opacity: 1;
+      transform: none;
+   }
+}
+
+// ---------------------------------------------------------------------------
+// Signature moment #1 — hero eyebrow/headline "ink-in" on load (MOCKUP
+// §3.1, SPEC §10). Fully clipped from below at rest, unclipping to
+// `inset(0)` once revealed — an ink-fill read rather than the generic
+// fade/rise, so opacity/transform are pinned instead of inherited from
+// `.reveal`. The hero sits above the fold, so `use:reveal`'s
+// `IntersectionObserver` fires on mount rather than on scroll.
+// ---------------------------------------------------------------------------
+.hero__eyebrow--ink.reveal,
+.hero__headline--ink.reveal {
+   opacity: 1;
+   transform: none;
+   clip-path: inset(0 0 100% 0);
+   transition: clip-path $duration-interactive $ease-spring;
+}
+
+.hero__eyebrow--ink.is-revealed,
+.hero__headline--ink.is-revealed {
+   clip-path: inset(0);
+}
+
+// ---------------------------------------------------------------------------
+// Signature moment #2 — shipping stamp "presses in" on scroll into view
+// (MOCKUP §3.3): scale(1.4) settling to scale(1) with the system's spring
+// easing supplying the overshoot. Only `transform` is overridden — opacity
+// and the transition itself still come from `.reveal` above.
+// ---------------------------------------------------------------------------
+.stamp.reveal {
+   transform: scale(1.4);
+}
+
+.stamp.is-revealed {
+   transform: scale(1);
+}
+
+// ---------------------------------------------------------------------------
+// Signature moment #3 — process timeline connector "draws" in as each step
+// reveals (MOCKUP §3.4). The connector itself (`.timeline__step::after`) is
+// existing, static geometry from `components/_process.scss`; this only adds
+// a scale-y transform on top of it. The stagger is the per-step `delay`
+// passed to `use:reveal` at each call site, not a CSS animation-delay chain.
+// ---------------------------------------------------------------------------
+.timeline__step.reveal::after {
+   transform: scaleY(0);
+   transform-origin: top;
+   transition: transform $duration-interactive $ease-spring;
+}
+
+.timeline__step.is-revealed::after {
+   transform: scaleY(1);
+}
+
+// ---------------------------------------------------------------------------
+// Reduced motion — every rule above collapses to its settled end state:
+// fully opaque, unclipped, unscaled, fully drawn. Selectors mirror the
+// animated ones one-for-one so specificity ties resolve to this block
+// (declared last) rather than to whichever came first above.
+// ---------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+   .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+   }
+
+   .hero__eyebrow--ink.reveal,
+   .hero__headline--ink.reveal,
+   .hero__eyebrow--ink.is-revealed,
+   .hero__headline--ink.is-revealed {
+      clip-path: none;
+      transition: none;
+   }
+
+   .stamp.reveal,
+   .stamp.is-revealed {
+      transform: none;
+      transition: none;
+   }
+
+   .timeline__step.reveal::after,
+   .timeline__step.is-revealed::after {
+      transform: none;
+      transition: none;
+   }
+}

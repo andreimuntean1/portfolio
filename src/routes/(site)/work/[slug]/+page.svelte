@@ -7,6 +7,7 @@
    import Stamp from '$lib/components/mdx/Stamp.svelte';
    import Seo from '$lib/seo/Seo.svelte';
    import { canonicalUrl, jsonLdBreadcrumbs, jsonLdCreativeWork } from '$lib/seo/meta';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -57,7 +58,7 @@
 />
 
 <article class="case-study">
-   <header class="case-study__header">
+   <header class="case-study__header" use:reveal>
       {#if data.project.client}
          <p class="case-study__client">{data.project.client}</p>
       {/if}
@@ -126,7 +127,7 @@
       <Metrics items={data.project.metrics} />
    {/if}
 
-   <div class="case-study__body">
+   <div class="case-study__body" use:reveal>
       {#if data.body}
          {@const Body = data.body}
          <Body slug={data.project.slug} />
@@ -141,7 +142,7 @@
       />
    {/if}
 
-   <footer class="case-study__footer">
+   <footer class="case-study__footer" use:reveal>
       <Stamp />
       <a class="cta cta--primary" href={contactHref}>{m.cta_get_in_touch({}, { locale })}</a>
    </footer>

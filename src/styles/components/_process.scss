@@ -2,10 +2,11 @@
 
 // ---------------------------------------------------------------------------
 // Engagement flow timeline (`/process`, MOCKUP §3.4) — a plain, static,
-// accessible ordered list today (Task 12). The numbered marker and
-// connecting rule between steps give Task 18 a shape to later animate as a
-// scroll-drawing sequence (signature motion moment #3); no motion is added
-// here, and none is needed yet since nothing here moves.
+// accessible ordered list (Task 12). The numbered marker and connecting
+// rule between steps are the static geometry that `_motion.scss` (Task 18)
+// animates as a scroll-drawing sequence (signature motion moment #3) via
+// `.timeline__step.reveal`/`.is-revealed` selectors — no motion rules live
+// in this file itself.
 // ---------------------------------------------------------------------------
 .timeline {
    position: relative;

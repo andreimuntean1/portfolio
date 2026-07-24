@@ -1,8 +1,10 @@
 <script lang="ts">
+   import { reveal } from '$lib/motion/reveal';
+
    let { items }: { items: { label: string; value: string }[] } = $props();
 </script>
 
-<ul class="metrics">
+<ul class="metrics" use:reveal>
    {#each items as metric (metric.label)}
       <li class="metrics__item">
          <span class="metrics__value">{metric.value}</span>

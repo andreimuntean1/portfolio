@@ -3,6 +3,7 @@
    import { reactiveLocale, resolvedHref } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
    import Seo from '$lib/seo/Seo.svelte';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -13,6 +14,12 @@
    const locale = $derived(reactiveLocale());
 
    const contactHref = $derived(resolvedHref(localizeHref('/contact', { locale })));
+
+   // Signature moment #3 (MOCKUP §3.4) — the timeline "draws" in step by
+   // step rather than all at once. Each `<li>` gets its own `use:reveal`
+   // with an increasing delay, so the stagger comes from the action's own
+   // `delay` option instead of a separate hand-rolled animation-delay chain.
+   const TIMELINE_STEP_DELAY_MS = 120;
 </script>
 
 <Seo
@@ -25,21 +32,21 @@
    <h1 class="page__heading">{m.nav_process({}, { locale })}</h1>
    <p class="page__intro">{m.process_intro({}, { locale })}</p>
 
-   <!-- Engagement flow (SPEC §5 Process, item 2) — a plain, static, accessible
-        ordered list today; Task 18 adds the scroll-drawing reveal on top of
-        this same markup (settling instantly under reduced-motion), not built
-        here. -->
+   <!-- Engagement flow (SPEC §5 Process, item 2) — same static, accessible
+        ordered list from Task 12; the per-step `use:reveal` above draws the
+        connector in on scroll (`src/styles/_motion.scss`), settling
+        instantly under reduced-motion. Markup/structure unchanged. -->
    <ol class="timeline">
-      <li class="timeline__step">
+      <li class="timeline__step" use:reveal={{ delay: TIMELINE_STEP_DELAY_MS * 0 }}>
          <p class="timeline__label">{m.process_step_discovery({}, { locale })}</p>
       </li>
-      <li class="timeline__step">
+      <li class="timeline__step" use:reveal={{ delay: TIMELINE_STEP_DELAY_MS * 1 }}>
          <p class="timeline__label">{m.process_step_proposal({}, { locale })}</p>
       </li>
-      <li class="timeline__step">
+      <li class="timeline__step" use:reveal={{ delay: TIMELINE_STEP_DELAY_MS * 2 }}>
          <p class="timeline__label">{m.process_step_build({}, { locale })}</p>
       </li>
-      <li class="timeline__step">
+      <li class="timeline__step" use:reveal={{ delay: TIMELINE_STEP_DELAY_MS * 3 }}>
          <p class="timeline__label">{m.process_step_handover({}, { locale })}</p>
       </li>
    </ol>

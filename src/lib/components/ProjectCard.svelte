@@ -3,6 +3,7 @@
    import { reactiveLocale, resolvedHref } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
    import type { ProjectMeta } from '$lib/content/projects';
+   import { reveal } from '$lib/motion/reveal';
    import Metrics from './mdx/Metrics.svelte';
 
    let { project, variant }: { project: ProjectMeta; variant: 'flagship' | 'entry' } = $props();
@@ -35,7 +36,7 @@
 {/snippet}
 
 {#if variant === 'flagship' && project.tier === 'flagship'}
-   <a class="card card--flagship" href={caseStudyHref}>
+   <a class="card card--flagship" href={caseStudyHref} use:reveal>
       <h3 class="card__title" style:view-transition-name={'title-' + project.slug}>
          {project.title}
       </h3>
@@ -47,7 +48,7 @@
       <span class="card__status card__status--{project.status}">{statusLabel}</span>
    </a>
 {:else}
-   <article class="card card--entry">
+   <article class="card card--entry" use:reveal>
       {#if project.entryNo !== undefined}
          <p class="card__ledger">№ {String(project.entryNo).padStart(3, '0')}</p>
       {/if}
