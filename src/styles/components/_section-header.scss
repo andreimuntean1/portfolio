@@ -35,6 +35,14 @@
    background: $color-seam;
 }
 
+.section-header__meta {
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: 0.08em;
+   color: $color-text-ghost;
+   white-space: nowrap;
+}
+
 .section-header__link {
    padding-bottom: 2px;
    font-family: $font-mono;

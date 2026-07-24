@@ -5,6 +5,7 @@
    import * as m from '$lib/paraglide/messages';
    import Availability from '$lib/components/Availability.svelte';
    import Seo from '$lib/seo/Seo.svelte';
+   import { reveal } from '$lib/motion/reveal';
    import type { ActionData, SubmitFunction } from './$types';
 
    let { form }: { form: ActionData } = $props();
@@ -95,7 +96,14 @@
 <Seo title={m.nav_contact({}, { locale })} description={DESCRIPTION[locale]} pageId="contact" />
 
 <article class="page">
-   <h1 class="page__heading">{m.nav_contact({}, { locale })}</h1>
+   <div class="page__header">
+      <p class="page__eyebrow hero__eyebrow--ink" use:reveal>
+         <span class="page__eyebrow-rule" aria-hidden="true"></span>
+         {m.contact_eyebrow({}, { locale })}
+      </p>
+      <h1 class="page__heading hero__headline--ink" use:reveal>{m.nav_contact({}, { locale })}</h1>
+      <p class="page__intro">{m.contact_intro({}, { locale })}</p>
+   </div>
 
    {#if form?.sent}
       <div class="contact-form__success">

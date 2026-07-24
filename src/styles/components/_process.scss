@@ -13,6 +13,7 @@
    display: flex;
    flex-direction: column;
    gap: $space-6;
+   max-width: 860px;
    margin: $space-7 0;
    padding: 0;
    list-style: none;
@@ -24,28 +25,54 @@
    padding-inline-start: $space-7;
    counter-increment: timeline-step;
 
+   // Dot marker — hollow copper ring for every step but the last, which
+   // reads as the finished/solid one (mirrors the home process rail's
+   // same last-step treatment).
    &::before {
-      content: counter(timeline-step, decimal-leading-zero);
+      content: '';
       position: absolute;
-      inset-inline-start: 0;
-      font-family: $font-mono;
-      font-size: $font-size-label;
-      color: $color-copper;
+      inset-inline-start: 3px;
+      top: 4px;
+      width: 11px;
+      height: 11px;
+      box-sizing: border-box;
+      border: 2px solid $color-copper;
+      border-radius: 50%;
+      background: $color-umber;
+   }
+
+   &:last-child::before {
+      border: none;
+      background: $color-copper;
    }
 
    &:not(:last-child)::after {
       content: '';
       position: absolute;
-      inset-inline-start: $space-2;
+      inset-inline-start: 8px;
       top: $space-5;
       bottom: calc(-1 * #{$space-6});
       width: 1px;
-      background: $color-seam;
+      background: $color-copper;
+   }
+}
+
+.timeline__num {
+   margin: 0 0 $space-2;
+   font-family: $font-mono;
+   font-size: $font-size-micro;
+   letter-spacing: 0.16em;
+   color: $color-text-ghost;
+
+   &::before {
+      content: counter(timeline-step, decimal-leading-zero);
    }
 }
 
 .timeline__label {
    margin: 0;
-   font-size: $font-size-body-lg;
+   max-width: 56ch;
+   font-size: $font-size-body;
+   line-height: $line-height-body;
    color: $color-text-muted;
 }

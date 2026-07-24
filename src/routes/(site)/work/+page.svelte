@@ -1,8 +1,11 @@
 <script lang="ts">
-   import { reactiveLocale } from '$lib/i18n';
+   import { localizeHref } from '$lib/paraglide/runtime';
+   import { reactiveLocale, resolvedHref } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
    import ProjectCard from '$lib/components/ProjectCard.svelte';
+   import SectionHeader from '$lib/components/SectionHeader.svelte';
    import Seo from '$lib/seo/Seo.svelte';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -11,6 +14,8 @@
    // keeps every message below correct after a client-side language switch,
    // matching the pattern established by `SiteNav.svelte`/`+page.svelte` (`/`).
    const locale = $derived(reactiveLocale());
+
+   const contactHref = $derived(resolvedHref(localizeHref('/contact', { locale })));
 
    // No MDX frontmatter backs this index page (unlike process/about/colophon),
    // so its meta description is a plain locale-keyed literal here — same
@@ -24,24 +29,46 @@
 
 <Seo title={m.nav_work({}, { locale })} description={DESCRIPTION[locale]} pageId="work" />
 
+<header class="work-header page__header">
+   <p class="page__eyebrow hero__eyebrow--ink" use:reveal>
+      <span class="page__eyebrow-rule" aria-hidden="true"></span>
+      {m.work_eyebrow({}, { locale })}
+   </p>
+   <h1 class="page__heading hero__headline--ink" use:reveal>{m.nav_work({}, { locale })}</h1>
+   <p class="page__intro">{m.work_intro({}, { locale })}</p>
+</header>
+
 <section class="work-flagships" aria-labelledby="work-flagships-heading">
-   <h1 class="work-flagships__heading" id="work-flagships-heading">
-      {m.work_flagships_heading({}, { locale })}
-   </h1>
+   <SectionHeader
+      num="01"
+      label={m.work_section_flagships({}, { locale })}
+      id="work-flagships-heading"
+      meta={m.work_section_flagships_meta({}, { locale })}
+   />
    <div class="work-flagships__grid">
       {#each data.flagships as project (project.slug)}
-         <ProjectCard {project} variant="flagship" headingLevel={2} />
+         <ProjectCard {project} variant="flagship" />
       {/each}
    </div>
 </section>
 
 <section class="work-entries" aria-labelledby="work-entries-heading">
-   <h2 class="work-entries__heading" id="work-entries-heading">
-      {m.work_entries_heading({}, { locale })}
-   </h2>
+   <SectionHeader
+      num="02"
+      label={m.work_section_rest({}, { locale })}
+      id="work-entries-heading"
+      meta={m.work_section_rest_meta({}, { locale })}
+   />
    <div class="work-entries__grid">
       {#each data.entries as project (project.slug)}
          <ProjectCard {project} variant="entry" />
       {/each}
+   </div>
+   <div class="work-ledger-note">
+      <p class="work-ledger-note__text">
+         <span class="work-ledger-note__prefix">n.b. —</span>
+         {m.work_ledger_note({}, { locale })}
+      </p>
+      <a class="work-ledger-note__link" href={contactHref}>{m.work_add_yours({}, { locale })}</a>
    </div>
 </section>

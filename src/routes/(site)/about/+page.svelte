@@ -4,6 +4,7 @@
    import * as m from '$lib/paraglide/messages';
    import Seo from '$lib/seo/Seo.svelte';
    import { jsonLdPerson } from '$lib/seo/meta';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -32,7 +33,18 @@
 />
 
 <article class="page">
-   <h1 class="page__heading">{m.nav_about({}, { locale })}</h1>
+   <!-- `hero__eyebrow--ink`/`hero__headline--ink` (see `_motion.scss`) is
+        signature moment #1 — reused verbatim here rather than duplicated
+        under a page-specific name, since every page header in the design
+        gets the identical above-the-fold ink-reveal treatment. -->
+   <div class="page__header">
+      <p class="page__eyebrow hero__eyebrow--ink" use:reveal>
+         <span class="page__eyebrow-rule" aria-hidden="true"></span>
+         {m.about_eyebrow({}, { locale })}
+      </p>
+      <h1 class="page__heading hero__headline--ink" use:reveal>{m.nav_about({}, { locale })}</h1>
+      <p class="page__intro">{m.about_intro({}, { locale })}</p>
+   </div>
 
    <div class="page__body">
       {#if data.body}

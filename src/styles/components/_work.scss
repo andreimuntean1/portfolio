@@ -3,47 +3,80 @@
 // ---------------------------------------------------------------------------
 // Work index (`/work`) — flagship section (3 large `ProjectCard`s, link out
 // to their case studies) and entries section (compact `ProjectCard`s,
-// catalog-numbered — MOCKUP §3.2). Functional/token-plain per Task 10
-// (Phase 4 note: the design pass lands in Task 19), following the
-// one-file-per-route grouping already used by `_hero.scss`.
+// catalog-numbered — MOCKUP §3.2), matching design-files/Work.dc.html. The
+// page header itself reuses `.page`/`.page__header` (`_page.scss`); these
+// two sections sit as plain siblings after it, same 1240px width.
 // ---------------------------------------------------------------------------
-.work-flagships {
-   padding: $space-8 $space-5 $space-7;
+.work-header {
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(48px, 7vw, 84px) clamp(20px, 4.5vw, 48px) 0;
 }
 
-.work-flagships__heading {
-   margin-bottom: $space-5;
-   font-family: $font-mono;
-   font-size: $font-size-label;
-   font-weight: $weight-regular;
-   letter-spacing: $letter-spacing-label;
-   text-transform: uppercase;
-   color: $color-text-faint;
-}
-
-.work-flagships__grid {
-   display: grid;
-   gap: $space-5;
-}
-
+.work-flagships,
 .work-entries {
-   padding: $space-7 $space-5 $space-8;
-   border-top: $border-hairline;
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(44px, 6vw, 64px) clamp(20px, 4.5vw, 48px) 0;
 }
 
-.work-entries__heading {
-   margin-bottom: $space-5;
-   font-family: $font-mono;
-   font-size: $font-size-label;
-   font-weight: $weight-regular;
-   letter-spacing: $letter-spacing-label;
-   text-transform: uppercase;
-   color: $color-text-faint;
-}
-
+.work-flagships__grid,
 .work-entries__grid {
    display: grid;
    gap: $space-4;
+}
+
+.work-entries {
+   padding-top: clamp(56px, 8vw, 88px);
+   padding-bottom: $space-8;
+}
+
+// ---------------------------------------------------------------------------
+// Ledger note — closes the entries grid, explaining why retired work stays
+// listed (MOCKUP §1.5's honesty principle, restated in the maker's voice).
+// ---------------------------------------------------------------------------
+.work-ledger-note {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: $space-3;
+   margin-top: $space-4;
+   padding: 22px;
+   border: 1px dashed $color-seam;
+   border-radius: $radius-md;
+}
+
+.work-ledger-note__text {
+   margin: 0;
+   font-family: $font-mono;
+   font-style: italic;
+   font-size: $font-size-small;
+   line-height: 1.7;
+   color: $color-text-faint;
+}
+
+.work-ledger-note__prefix {
+   margin-inline-end: $space-1;
+   color: $color-copper;
+}
+
+.work-ledger-note__link {
+   align-self: flex-start;
+   padding-bottom: 2px;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   color: $color-copper;
+   border-bottom: 1px solid rgba($color-copper, 0.4);
+
+   &:hover {
+      color: $color-copper-hover;
+      border-bottom-color: $color-copper-hover;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $focus-ring-offset;
+   }
 }
 
 @media (min-width: $breakpoint-md) {

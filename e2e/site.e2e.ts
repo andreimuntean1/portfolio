@@ -19,7 +19,7 @@ test('locale switch: /work -> /ro/work with RO heading', async ({ page }) => {
    // used in both) — scope to the desktop one, visible at this viewport.
    await page.locator('.nav__links .nav__locale').click();
    await expect(page).toHaveURL('/ro/work');
-   await expect(page.locator('h1')).toHaveText('Proiecte emblematice');
+   await expect(page.locator('h1')).toHaveText('Lucrări');
 });
 
 test('404: unknown work slug shows not-found page', async ({ page }) => {

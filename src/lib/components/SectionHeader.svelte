@@ -7,12 +7,14 @@
       id,
       href,
       linkLabel,
+      meta,
    }: {
       num: string;
       label: string;
       id?: string;
       href?: ResolvedPathname;
       linkLabel?: string;
+      meta?: string;
    } = $props();
 </script>
 
@@ -24,5 +26,7 @@
    <span class="section-header__rule" aria-hidden="true"></span>
    {#if href && linkLabel}
       <a class="section-header__link" {href}>{linkLabel}</a>
+   {:else if meta}
+      <span class="section-header__meta">{meta}</span>
    {/if}
 </div>

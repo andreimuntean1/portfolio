@@ -2,29 +2,78 @@
 
 // ---------------------------------------------------------------------------
 // Shared static-page wrapper — `/process`, `/about`, `/colophon`, `/contact`
-// and the root 404 all use this same single-column layout (Task 12). No
-// per-page modifier classes: nothing here differs by page yet, that's the
-// Task 19 design pass's job.
+// all use this same header shape (Task 19: every page header in the design
+// export is the same eyebrow/h1/intro block in a 1240px-wide container, not
+// the narrow single-column shell Task 12 shipped before the design pass).
+// Body prose stays narrower than the shell for readability — real body
+// copy for About/Colophon/Process is still "Placeholder — ... lands at the
+// content pass" in its MDX source (a separate task from this one), so this
+// only styles the container, not new content.
 // ---------------------------------------------------------------------------
 .page {
-   max-width: 42rem;
+   max-width: 1240px;
    margin-inline: auto;
-   padding: $space-8 $space-5;
+   padding-inline: clamp(20px, 4.5vw, 48px);
+   padding-bottom: $space-8;
+}
+
+.page__header {
+   padding-top: clamp(48px, 7vw, 84px);
+}
+
+.page__eyebrow {
+   display: flex;
+   align-items: center;
+   gap: $space-3;
+   margin: 0 0 $space-5;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-copper;
+}
+
+.page__eyebrow-rule {
+   width: 28px;
+   height: 1px;
+   background: $color-copper;
 }
 
 .page__heading {
-   margin-bottom: $space-5;
+   margin: 0 0 $space-5;
    font-size: $font-size-display-lg;
 }
 
 .page__intro {
-   max-width: 40ch;
-   font-size: $font-size-body-lg;
+   max-width: 56ch;
+   font-size: $font-size-lede;
+   line-height: $line-height-body;
    color: $color-text-muted;
 }
 
 .page__body {
+   max-width: 42rem;
    margin-block: $space-7;
+
+   h2 {
+      margin: $space-7 0 $space-3;
+      font-family: $font-mono;
+      font-weight: $weight-regular;
+      font-size: $font-size-label;
+      letter-spacing: $letter-spacing-label;
+      text-transform: uppercase;
+      color: $color-copper;
+
+      &:first-child {
+         margin-top: 0;
+      }
+   }
+
+   p {
+      font-size: $font-size-body-lg;
+      line-height: $line-height-body;
+      color: $color-text-muted;
+   }
 }
 
 .page__links {
@@ -60,18 +109,73 @@
 // ---------------------------------------------------------------------------
 // 404 — root `+error.svelte`, on-brand "lost in the workshop" copy (MOCKUP
 // §3.8). Composes its own nav/footer shell (see the component's own
-// comment), so only the main content needs styling here.
+// comment), so only the main content needs styling here. Centered, with the
+// same oversized-watermark treatment as the hero (`.hero::before`), just
+// "404" instead of "am".
 // ---------------------------------------------------------------------------
 .not-found {
+   position: relative;
+   overflow: hidden;
+   min-height: 72vh;
+   display: flex;
+   align-items: center;
+}
+
+.not-found__watermark {
+   position: absolute;
+   top: 46%;
+   left: 50%;
+   margin: 0;
+   font-family: $font-display;
+   font-weight: $weight-regular;
+   font-size: clamp(180px, 36vw, 520px);
+   line-height: 1;
+   color: rgba($color-ivory, 0.045);
+   transform: translate(-50%, -50%);
+   pointer-events: none;
+}
+
+.not-found__inner {
+   position: relative;
    display: flex;
    flex-direction: column;
-   align-items: flex-start;
+   align-items: center;
    gap: $space-5;
-   max-width: 42rem;
-   margin-inline: auto;
-   padding: $space-8 $space-5;
+   width: 100%;
+   max-width: 1240px;
+   margin: 0 auto;
+   padding: clamp(48px, 8vw, 96px) clamp(20px, 4.5vw, 48px);
+   text-align: center;
+}
+
+.not-found__eyebrow {
+   margin: 0;
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-copper;
 }
 
 .not-found__title {
-   font-size: $font-size-display-lg;
+   margin: 0;
+   max-width: 16ch;
+   font-size: clamp(2.4rem, 6vw, 4.2rem);
+   line-height: 1.08;
+   text-wrap: balance;
+}
+
+.not-found__note {
+   margin: 0;
+   max-width: 44ch;
+   font-family: $font-mono;
+   font-style: italic;
+   font-size: $font-size-body-md;
+   line-height: 1.7;
+   color: $color-text-faint;
+}
+
+.not-found__note-prefix {
+   margin-inline-end: $space-1;
+   color: $color-copper;
 }

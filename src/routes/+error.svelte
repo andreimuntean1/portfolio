@@ -22,7 +22,15 @@
 <a class="skip-link" href="#content">{m.skip_to_content({}, { locale })}</a>
 <SiteNav />
 <main id="content" class="not-found">
-   <h1 class="not-found__title">{m.not_found_title({}, { locale })}</h1>
-   <a class="cta cta--primary" href={homeHref}>{m.not_found_cta({}, { locale })}</a>
+   <p class="not-found__watermark" aria-hidden="true">404</p>
+   <div class="not-found__inner">
+      <p class="not-found__eyebrow">{m.not_found_eyebrow({}, { locale })}</p>
+      <h1 class="not-found__title">{m.not_found_title({}, { locale })}</h1>
+      <p class="not-found__note">
+         <span class="not-found__note-prefix">n.b. —</span>
+         {m.not_found_note({}, { locale })}
+      </p>
+      <a class="cta cta--primary" href={homeHref}>{m.not_found_cta({}, { locale })}</a>
+   </div>
 </main>
 <SiteFooter />

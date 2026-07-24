@@ -2,6 +2,7 @@
    import { reactiveLocale } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
    import Seo from '$lib/seo/Seo.svelte';
+   import { reveal } from '$lib/motion/reveal';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -25,7 +26,16 @@
 />
 
 <article class="page">
-   <h1 class="page__heading">{m.footer_colophon({}, { locale })}</h1>
+   <div class="page__header">
+      <p class="page__eyebrow hero__eyebrow--ink" use:reveal>
+         <span class="page__eyebrow-rule" aria-hidden="true"></span>
+         {m.colophon_eyebrow({}, { locale })}
+      </p>
+      <h1 class="page__heading hero__headline--ink" use:reveal>
+         {m.footer_colophon({}, { locale })}
+      </h1>
+      <p class="page__intro">{m.colophon_intro({}, { locale })}</p>
+   </div>
 
    <div class="page__body">
       {#if data.body}
