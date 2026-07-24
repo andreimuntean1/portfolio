@@ -17,6 +17,7 @@
    "form_email": "Email",
    "form_message": "What are we building?",
    "form_submit": "Send message",
+   "form_submitting": "Sending…",
    "form_error_name": "Let me know your name.",
    "form_error_email": "I'll need an email to reply to.",
    "form_error_message": "Tell me a bit about what you're building.",

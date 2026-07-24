@@ -1,9 +1,9 @@
 @use '../variables' as *;
 
 // ---------------------------------------------------------------------------
-// Contact form (`/contact`, MOCKUP §3.6) — markup-only skeleton (Task 12):
-// default/filled states styled here, field-level error/submitting/success/
-// failure states are Task 14's job once the server action exists.
+// Contact form (`/contact`, MOCKUP §3.6) — markup skeleton from Task 12;
+// field-level error/submitting/success/failure states added in Task 14 once
+// the server action existed.
 // ---------------------------------------------------------------------------
 .contact-form {
    display: flex;
@@ -46,6 +46,33 @@
 .contact-form__textarea {
    min-height: 8rem;
    resize: vertical;
+}
+
+.contact-form__error {
+   font-size: $font-size-body-md;
+   color: $color-copper;
+}
+
+.contact-form .cta[disabled] {
+   cursor: not-allowed;
+   opacity: 0.6;
+}
+
+.contact-form__success {
+   max-width: 32rem;
+   margin-top: $space-6;
+}
+
+.contact-form__success-title {
+   font-family: $font-display;
+   font-size: $font-size-display-md;
+   color: $color-ivory;
+}
+
+.contact-form__success-body {
+   margin-top: $space-3;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
 }
 
 .contact-form__fallback {
