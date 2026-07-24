@@ -49,3 +49,38 @@ test('llms.txt is served and mentions Andrei', async ({ request }) => {
    expect(response.ok()).toBe(true);
    expect(await response.text()).toContain('Andrei');
 });
+
+test.describe('mobile menu', () => {
+   // Below the 800px nav-collapse breakpoint, so the `<details>` disclosure
+   // (not the desktop row) is the live nav.
+   test.use({ viewport: { width: 390, height: 780 } });
+
+   test('closes on link navigation, the X toggle, and Escape', async ({ page }) => {
+      const disclosure = page.locator('.nav__disclosure');
+      const toggle = page.locator('.nav__disclosure-toggle');
+      const panelLink = page.locator('.nav__panel-link', { hasText: 'Work' });
+
+      // Navigating from a menu link must close the menu — otherwise the
+      // fullscreen panel covers the page just navigated to.
+      await page.goto('/');
+      await toggle.click();
+      await expect(disclosure).toHaveAttribute('open', '');
+      await expect(panelLink).toBeVisible();
+      await panelLink.click();
+      await expect(page).toHaveURL('/work');
+      await expect(disclosure).not.toHaveAttribute('open', '');
+
+      // The X toggle closes it — regression guard for the fullscreen panel
+      // (z-index 90) previously painting over the toggle and eating the click.
+      await toggle.click();
+      await expect(disclosure).toHaveAttribute('open', '');
+      await toggle.click();
+      await expect(disclosure).not.toHaveAttribute('open', '');
+
+      // Escape closes it — native <details> doesn't honour Escape on its own.
+      await toggle.click();
+      await expect(disclosure).toHaveAttribute('open', '');
+      await page.keyboard.press('Escape');
+      await expect(disclosure).not.toHaveAttribute('open', '');
+   });
+});

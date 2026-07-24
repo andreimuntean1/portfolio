@@ -181,6 +181,12 @@
 
 .nav__disclosure-toggle {
    position: relative;
+
+   // Above `.nav__panel` (z-index 90) within the sticky `.nav`'s stacking
+   // context — the fullscreen panel is a later sibling in the `<details>`, so
+   // without this it paints over the toggle and swallows the click meant to
+   // close the menu. This keeps the X in the corner clickable while open.
+   z-index: 100;
    display: flex;
    align-items: center;
    justify-content: center;

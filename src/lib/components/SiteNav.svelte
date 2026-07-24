@@ -1,5 +1,6 @@
 <script lang="ts">
    import { page } from '$app/state';
+   import { afterNavigate } from '$app/navigation';
    import { localizeHref } from '$lib/paraglide/runtime';
    import { altHref, reactiveLocale, resolvedHref } from '$lib/i18n';
    import { getSiteConfig } from '$lib/content/site';
@@ -32,7 +33,33 @@
    function isActive(path: string): boolean {
       return page.url.pathname === localizeHref(path, { locale });
    }
+
+   // The open/close *mechanism* stays the native `<details>` toggle (Task
+   // 19's "no new logic" note). These two handlers only add the ways to
+   // *close* it that a native disclosure doesn't cover on its own, both of
+   // which are load-bearing on a fullscreen mobile menu, not polish:
+   //   - a menu link is a client-side navigation, which leaves `<details>`
+   //     open (the nav lives in the persistent layout, so its `open`
+   //     attribute survives the nav) — the fullscreen panel would then cover
+   //     the page the user just navigated to;
+   //   - Escape is the expected dismiss key for any fullscreen overlay, and
+   //     native `<details>` (unlike `<dialog>`) does not honour it.
+   let disclosure = $state<HTMLDetailsElement | null>(null);
+
+   afterNavigate(() => {
+      if (disclosure) {
+         disclosure.open = false;
+      }
+   });
+
+   function closeOnEscape(event: KeyboardEvent): void {
+      if (event.key === 'Escape' && disclosure?.open) {
+         disclosure.open = false;
+      }
+   }
 </script>
+
+<svelte:window onkeydown={closeOnEscape} />
 
 {#snippet localeSwitcher(variantClass: string)}
    <a class="nav__locale {variantClass}" href={resolvedHref(altHref(page.url.pathname, locale))}>
@@ -82,7 +109,7 @@
            new logic" constraint from Task 19's brief is why this stays a
            native `<details>`/`<summary>` toggle rather than JS-managed open
            state, same as the rest of the component. -->
-      <details class="nav__disclosure">
+      <details class="nav__disclosure" bind:this={disclosure}>
          <summary class="nav__disclosure-toggle">
             <span class="visually-hidden">{menuLabel}</span>
          </summary>
