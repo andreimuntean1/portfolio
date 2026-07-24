@@ -17,7 +17,7 @@
   <meta name="title" content="Andrei Muntean | Front-end developer" />
   <meta
     name="description"
-    content="Andrei Muntean is a front-end developer who specializes in building (and occasionally designing) exceptional digital experiences."
+    content="Andrei Muntean builds web things people actually enjoy using: front-end by craft, full-stack when the job asks for it."
   />
 
   <meta property="og:type" content="website" />
@@ -25,7 +25,7 @@
   <meta property="og:title" content="Andrei Muntean | Front-end developer" />
   <meta
     property="og:description"
-    content="Andrei Muntean is a front-end developer who specializes in building (and occasionally designing) exceptional digital experiences."
+    content="Andrei Muntean builds web things people actually enjoy using: front-end by craft, full-stack when the job asks for it."
   />
   <meta property="og:image" content="https://andreimuntean.dev/thumbnail.png" />
 
@@ -34,7 +34,7 @@
   <meta property="twitter:title" content="Andrei Muntean | Front-end developer" />
   <meta
     property="twitter:description"
-    content="Andrei Muntean is a front-end developer who specializes in building (and occasionally designing) exceptional digital experiences."
+    content="Andrei Muntean builds web things people actually enjoy using: front-end by craft, full-stack when the job asks for it."
   />
   <meta property="twitter:image" content="https://andreimuntean.dev/thumbnail.png" />
 </svelte:head>
@@ -45,7 +45,7 @@
       <br />
       Andrei Muntean
     </h1>
-    <p>Front-end developer by focus, full-stack by experience, and web designer when it matters.</p>
+    <p>I build web things people actually enjoy using: front-end by craft, full-stack when the job asks for it.</p>
   </div>
 </section>
 <section class="ptf projects" id="work">
