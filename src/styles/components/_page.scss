@@ -74,6 +74,33 @@
       line-height: $line-height-body;
       color: $color-text-muted;
    }
+
+   ul {
+      display: flex;
+      flex-direction: column;
+      gap: $space-3;
+      margin: $space-4 0;
+      padding: 0;
+      list-style: none;
+   }
+
+   li {
+      display: flex;
+      gap: $space-3;
+      font-size: $font-size-body-lg;
+      line-height: $line-height-body;
+      color: $color-text-muted;
+
+      &::before {
+         content: '—';
+         flex-shrink: 0;
+         color: $color-copper;
+      }
+
+      strong {
+         color: $color-ivory;
+      }
+   }
 }
 
 .page__links {
