@@ -184,26 +184,44 @@
       left: 0;
       overflow: hidden;
 
+      // Soft glows drawn as radial gradients instead of `filter: blur()`:
+      // Firefox clamps large blur radii, so the filtered version rendered
+      // tighter and brighter there than in Chrome. Each element is the
+      // original shape grown by the blur spread, kept on the same centre.
       & > div {
-        filter: blur(150px);
         position: absolute;
+      }
 
-        &.orange {
-          background: rgba(207, 92, 54, 0.75);
-          border-radius: 850px;
-          width: 380px;
-          height: 850px;
-          top: -45%;
-          left: 1%;
-        }
+      & > .orange {
+        width: 960px;
+        height: 1520px;
+        top: calc(-45% - 335px);
+        left: calc(1% - 290px);
+        background: radial-gradient(
+          closest-side,
+          rgba(207, 92, 54, 0.58) 0%,
+          rgba(207, 92, 54, 0.54) 28%,
+          rgba(207, 92, 54, 0.32) 50%,
+          rgba(207, 92, 54, 0.12) 70%,
+          rgba(207, 92, 54, 0.02) 86%,
+          rgba(207, 92, 54, 0) 100%
+        );
+      }
 
-        &.white {
-          background: #eee5e9;
-          width: 270px;
-          height: 270px;
-          bottom: -10%;
-          right: -2%;
-        }
+      & > .white {
+        width: 1060px;
+        height: 1060px;
+        bottom: calc(-10% - 395px);
+        right: calc(-2% - 395px);
+        background: radial-gradient(
+          closest-side,
+          rgba(238, 229, 233, 0.44) 0%,
+          rgba(238, 229, 233, 0.35) 20%,
+          rgba(238, 229, 233, 0.185) 40%,
+          rgba(238, 229, 233, 0.065) 60%,
+          rgba(238, 229, 233, 0.015) 80%,
+          rgba(238, 229, 233, 0) 100%
+        );
       }
     }
 
