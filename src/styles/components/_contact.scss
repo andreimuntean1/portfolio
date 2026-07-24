@@ -21,26 +21,46 @@
 
 .contact-form__label {
    font-family: $font-mono;
-   font-size: $font-size-label;
-   letter-spacing: $letter-spacing-label;
+   font-size: $font-size-micro;
+   letter-spacing: 0.18em;
    text-transform: uppercase;
    color: $color-text-faint;
 }
 
+// ---------------------------------------------------------------------------
+// Fields (MOCKUP §1.7 / §3.6) — default/focus/error/disabled. "Filled" has
+// no distinct treatment in the design beyond holding a value, so there's no
+// separate rule for it. Focus swaps the shared outline-ring convention for
+// a border+soft-shadow pair scoped to fields — still a WCAG-compliant
+// visible indicator (2.4.7), just field-specific rather than reusing
+// $border-accent.
+// ---------------------------------------------------------------------------
 .contact-form__input,
 .contact-form__textarea {
-   padding: $space-3 $space-4;
-   background: $color-bench;
+   padding: 13px $space-4;
+   background: $color-umber;
    border: $border-hairline;
-   border-radius: $radius-md;
+   border-radius: $radius-input;
    color: $color-ivory;
    font-family: $font-body;
-   font-size: $font-size-body-md;
+   font-size: $font-size-body;
+   transition:
+      border-color $duration-interactive $ease-spring,
+      box-shadow $duration-interactive $ease-spring;
 
    &:focus-visible {
-      outline: $border-accent;
-      outline-offset: $focus-ring-offset;
+      outline: none;
+      border-color: $color-copper;
+      box-shadow: 0 0 0 3px rgba($color-copper, 0.15);
    }
+
+   &:disabled {
+      opacity: 0.45;
+   }
+}
+
+.contact-form__input--error {
+   border-color: rgba($color-terracotta, 0.75);
 }
 
 .contact-form__textarea {
@@ -49,8 +69,17 @@
 }
 
 .contact-form__error {
-   font-size: $font-size-body-md;
-   color: $color-copper;
+   font-family: $font-mono;
+   font-style: italic;
+   font-size: $font-size-label;
+   color: $color-terracotta;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .contact-form__input,
+   .contact-form__textarea {
+      transition: none;
+   }
 }
 
 .contact-form__success {

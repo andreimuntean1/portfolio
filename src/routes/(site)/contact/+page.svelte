@@ -110,14 +110,20 @@
             >
             <input
                class="contact-form__input"
+               class:contact-form__input--error={form?.errors?.name}
                id="contact-name"
                name="name"
                type="text"
                value={form?.values?.name ?? ''}
+               aria-invalid={form?.errors?.name ? 'true' : undefined}
+               aria-describedby={form?.errors?.name ? 'contact-name-error' : undefined}
+               disabled={submitting}
                required
             />
             {#if form?.errors?.name}
-               <p class="contact-form__error">{errorMessage(form.errors.name)}</p>
+               <p class="contact-form__error" id="contact-name-error">
+                  {errorMessage(form.errors.name)}
+               </p>
             {/if}
          </div>
 
@@ -127,14 +133,20 @@
             </label>
             <input
                class="contact-form__input"
+               class:contact-form__input--error={form?.errors?.email}
                id="contact-email"
                name="email"
                type="email"
                value={form?.values?.email ?? ''}
+               aria-invalid={form?.errors?.email ? 'true' : undefined}
+               aria-describedby={form?.errors?.email ? 'contact-email-error' : undefined}
+               disabled={submitting}
                required
             />
             {#if form?.errors?.email}
-               <p class="contact-form__error">{errorMessage(form.errors.email)}</p>
+               <p class="contact-form__error" id="contact-email-error">
+                  {errorMessage(form.errors.email)}
+               </p>
             {/if}
          </div>
 
@@ -144,13 +156,19 @@
             </label>
             <textarea
                class="contact-form__textarea"
+               class:contact-form__input--error={form?.errors?.message}
                id="contact-message"
                name="message"
                rows="5"
                value={form?.values?.message ?? ''}
+               aria-invalid={form?.errors?.message ? 'true' : undefined}
+               aria-describedby={form?.errors?.message ? 'contact-message-error' : undefined}
+               disabled={submitting}
                required></textarea>
             {#if form?.errors?.message}
-               <p class="contact-form__error">{errorMessage(form.errors.message)}</p>
+               <p class="contact-form__error" id="contact-message-error">
+                  {errorMessage(form.errors.message)}
+               </p>
             {/if}
          </div>
 
