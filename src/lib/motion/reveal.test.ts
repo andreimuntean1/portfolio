@@ -4,9 +4,11 @@ import { reveal } from './reveal';
 // This project routes DOM-needing specs to a real-browser test project via
 // the `*.svelte.test.ts` filename (`vite.config.ts`); plain `.test.ts` files
 // run under plain Node instead (no `window`/`document`). `reveal` only
-// touches three globals (`window.matchMedia`, `window.setTimeout`,
-// `IntersectionObserver`) and a `classList`-shaped node, so a hand-rolled
-// fake of each is simpler and faster than pulling in a full DOM for this.
+// touches a handful of globals (`window.matchMedia`/`setTimeout`/
+// `innerHeight`, `document.addEventListener`/`removeEventListener`/
+// `visibilityState`, `IntersectionObserver`) and a `classList`/
+// `getBoundingClientRect`-shaped node, so hand-rolled fakes of each are
+// simpler and faster than pulling in a full DOM for this.
 class FakeIntersectionObserver {
    public static instances: FakeIntersectionObserver[] = [];
 
@@ -29,7 +31,9 @@ class FakeIntersectionObserver {
    }
 }
 
-const createFakeNode = (): HTMLElement => {
+type FakeRect = { top: number; bottom: number; height: number };
+
+const createFakeNode = (rect: FakeRect = { top: 0, bottom: 100, height: 100 }): HTMLElement => {
    const classes = new Set<string>();
    const classList = {
       add: (name: string): void => {
@@ -40,8 +44,49 @@ const createFakeNode = (): HTMLElement => {
       },
    };
 
-   return { classList } as unknown as HTMLElement;
+   return {
+      classList,
+      getBoundingClientRect: () => {
+         return rect;
+      },
+   } as unknown as HTMLElement;
 };
+
+// Fake `document` — tracks `visibilitychange` listeners so a test can fire
+// them by hand, the same way a real tab-visibility change would.
+const createFakeDocument = () => {
+   const listeners = new Set<() => void>();
+   let visibilityState: 'hidden' | 'visible' = 'hidden';
+
+   return {
+      addEventListener: (type: string, handler: () => void): void => {
+         if (type === 'visibilitychange') {
+            listeners.add(handler);
+         }
+      },
+      removeEventListener: (type: string, handler: () => void): void => {
+         if (type === 'visibilitychange') {
+            listeners.delete(handler);
+         }
+      },
+      get visibilityState() {
+         return visibilityState;
+      },
+      setVisibilityState: (state: 'hidden' | 'visible'): void => {
+         visibilityState = state;
+      },
+      fireVisibilityChange: (): void => {
+         for (const handler of listeners) {
+            handler();
+         }
+      },
+      listenerCount: (): number => {
+         return listeners.size;
+      },
+   };
+};
+
+let fakeDocument: ReturnType<typeof createFakeDocument>;
 
 const setReducedMotion = (matches: boolean): void => {
    const matchMedia = vi.fn().mockReturnValue({ matches });
@@ -51,6 +96,7 @@ const setReducedMotion = (matches: boolean): void => {
    // wrapper picks up the faked version regardless of stub/fake-timer order.
    vi.stubGlobal('window', {
       matchMedia,
+      innerHeight: 800,
       setTimeout: (handler: () => void, timeout?: number) => {
          return globalThis.setTimeout(handler, timeout);
       },
@@ -60,6 +106,8 @@ const setReducedMotion = (matches: boolean): void => {
 beforeEach(() => {
    FakeIntersectionObserver.instances = [];
    vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
+   fakeDocument = createFakeDocument();
+   vi.stubGlobal('document', fakeDocument);
    setReducedMotion(false);
    vi.useFakeTimers();
 });
@@ -136,5 +184,54 @@ describe('reveal', () => {
       action.destroy();
 
       expect(observer.disconnect).toHaveBeenCalledOnce();
+   });
+
+   // Regression coverage for the bug this fallback fixes: a page that loads
+   // while its tab is backgrounded/occluded never gets an intersection
+   // callback from Chromium, even after the tab becomes visible — confirmed
+   // directly against real Chrome, not assumed (see the action's own doc
+   // comment). Content must self-heal once the tab is actually looked at.
+   it('reveals on visibilitychange if the node already qualifies and the observer never fired', () => {
+      const node = createFakeNode({ top: 100, bottom: 300, height: 200 });
+
+      reveal(node);
+      fakeDocument.setVisibilityState('visible');
+      fakeDocument.fireVisibilityChange();
+      vi.runAllTimers();
+
+      expect(node.classList.contains('is-revealed')).toBe(true);
+   });
+
+   it('does not reveal on visibilitychange if the node is not sufficiently in view', () => {
+      // height 200, only 20px (10%) within the fake 800px viewport — under
+      // the 0.2 threshold the real IntersectionObserver would also use.
+      const node = createFakeNode({ top: 780, bottom: 980, height: 200 });
+
+      reveal(node);
+      fakeDocument.setVisibilityState('visible');
+      fakeDocument.fireVisibilityChange();
+      vi.runAllTimers();
+
+      expect(node.classList.contains('is-revealed')).toBe(false);
+   });
+
+   it('removes the visibilitychange listener once revealed via intersection', () => {
+      const node = createFakeNode();
+
+      reveal(node);
+      const [observer] = FakeIntersectionObserver.instances;
+      observer.intersect(true);
+      vi.runAllTimers();
+
+      expect(fakeDocument.listenerCount()).toBe(0);
+   });
+
+   it('removes the visibilitychange listener on destroy', () => {
+      const node = createFakeNode();
+
+      const action = reveal(node) as { destroy(): void };
+      action.destroy();
+
+      expect(fakeDocument.listenerCount()).toBe(0);
    });
 });
