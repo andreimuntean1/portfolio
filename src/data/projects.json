@@ -1,7 +1,7 @@
 [
   {
     "title": "Dobricii",
-    "description": "Wedding platform with an AI seating assistant that rearranges tables on request, fuzzy-matched RSVPs with conflict resolution, and a full admin panel.",
+    "description": "Wedding platform built on Next.js and Supabase, with a Gemini-powered seating assistant that rearranges tables on request, fuzzy-matched RSVPs with conflict resolution, and a full admin panel. Planned up front and built in Claude Code under close review.",
     "links": {
       "demo": "https://dobricii.ro/demo/admin",
       "demoLabel": "See admin",
@@ -11,28 +11,28 @@
   },
   {
     "title": "CarHeltau",
-    "description": "Automotive automation tool featuring multi-step validation, dynamic PDF contract generation, and secure payment integration.",
+    "description": "Contract automation for a car dealer, built as two custom WordPress plugins: one generating PDF contracts from validated multi-step form submissions, the other wiring up Revolut payments with order status verification.",
     "links": {
       "demo": "https://carheltau.ro/contract-online"
     }
   },
   {
     "title": "Fota Industrial",
-    "description": "B2B presentation platform for industrial equipment featuring a custom CMS for catalog management and SEO optimization.",
+    "description": "B2B presentation site for industrial equipment, built on Wix — catalogue structure, content setup and SEO.",
     "links": {
       "demo": "https://fotaindustrial.ro"
     }
   },
   {
     "title": "Cursed Vision Films",
-    "description": "React performance overhaul for a cinematography site, featuring JavaScript debugging and cross-device video/gallery optimization.",
+    "description": "Video architecture and speed work for a cinematography studio's Next.js site: database-backed media storage, a custom player for unlisted YouTube embeds with no ads or recommendations, and an admin panel where pasting a link publishes a video instantly.",
     "links": {
-      "demo": "https://www.cursedvisionfilms.com"
+      "demo": "https://cvfilms.co"
     }
   },
   {
     "title": "bioRO",
-    "description": "bioRO is a startup where the buyers can see how the goods that the sellers are offering are produced, only by scanning a QR code.",
+    "description": "Startup platform where buyers scan a QR code to trace how the food they're buying was produced. Built with Next.js and Firebase, with QR scanning straight in the browser.",
     "links": {
       "demo": "https://bioro.vercel.app/",
       "figma": "https://www.figma.com/file/pdr5GpclDIoqT5257OxceV/BioRO?type=design&t=dxKagJXP43ElQrZB-6",
@@ -41,14 +41,14 @@
   },
   {
     "title": "Leida",
-    "description": "A simple but attractive landing page for a company that provides premium HoReCa equipment. The website I created is not used anymore.",
+    "description": "Landing page for a premium HoReCa equipment supplier, on a custom WordPress child theme with an interactive GeoJSON map of Romania plotting the company's cities. No longer in use.",
     "links": {
       "demo": "https://dev.leida.ro"
     }
   },
   {
     "title": "Wedding website",
-    "description": "A modern Vue app I built for my own wedding, where guests could upload photos, videos, and leave messages in a dedicated virtual space.",
+    "description": "Bilingual Vue app I built for my own wedding: guests uploaded photos and videos, and left messages that were saved as PDFs in a shared space.",
     "links": {
       "demo": "https://andreisiandreea.netlify.app",
       "github": "https://github.com/andreimuntean1/andreisiandreea",
@@ -57,17 +57,14 @@
   },
   {
     "title": "Priv",
-    "description": "Priv is a secure, real-time private messaging application built with Flutter and Supabase, specifically designed for communication between exactly two users.",
+    "description": "Real-time private messaging app for exactly two people, built with Flutter and Supabase, with media sharing, video compression and thumbnail generation.",
     "links": {
       "github": "https://github.com/andreimuntean1/priv"
     }
   },
   {
-    "title": "Atlis",
-    "description": "Atlis is a social media platform created around the concept of communities. The landing page I created is not used in the project anymore.",
-    "links": {
-      "demo": "https://atlis-landing-deprecated.fly.dev/",
-      "github": "https://github.com/andreimuntean1/atlis-landing"
-    }
+    "title": "HeltauLeads",
+    "description": "Internal lead engine for a car dealer: a Playwright scraper collects listings, classifies each seller, drafts a matching Romanian WhatsApp opener, and syncs everything to a Google Sheet behind a React dashboard.",
+    "links": {}
   }
 ]
