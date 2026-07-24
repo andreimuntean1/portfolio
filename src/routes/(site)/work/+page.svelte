@@ -30,7 +30,7 @@
    </h1>
    <div class="work-flagships__grid">
       {#each data.flagships as project (project.slug)}
-         <ProjectCard {project} variant="flagship" />
+         <ProjectCard {project} variant="flagship" headingLevel={2} />
       {/each}
    </div>
 </section>

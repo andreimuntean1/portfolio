@@ -6,7 +6,11 @@
    import { reveal } from '$lib/motion/reveal';
    import Metrics from './mdx/Metrics.svelte';
 
-   let { project, variant }: { project: ProjectMeta; variant: 'flagship' | 'entry' } = $props();
+   let {
+      project,
+      variant,
+      headingLevel = 3,
+   }: { project: ProjectMeta; variant: 'flagship' | 'entry'; headingLevel?: 2 | 3 } = $props();
 
    // `reactiveLocale()` (see `$lib/i18n.ts`) rather than `currentLocale()` —
    // keeps card copy correct after a client-side language switch, matching
@@ -25,6 +29,13 @@
    const statusLabel = $derived(STATUS_MESSAGE[project.status]({}, { locale }));
 
    const caseStudyHref = $derived(resolvedHref(localizeHref(`/work/${project.slug}`, { locale })));
+
+   // `variant="flagship"` is used directly under a page's own `<h1>` on
+   // `/work` (no intervening `<h2>`) and under an `<h2>` "featured" section
+   // on `/`, so the card title's own level can't be a fixed `<h3>` in both
+   // places without breaking heading order (axe `heading-order`, WCAG 1.3.1)
+   // — `headingLevel` lets each call site supply the correct one.
+   const titleTag = $derived(`h${headingLevel}` as const);
 </script>
 
 {#snippet stack()}
@@ -37,9 +48,13 @@
 
 {#if variant === 'flagship' && project.tier === 'flagship'}
    <a class="card card--flagship" href={caseStudyHref} use:reveal>
-      <h3 class="card__title" style:view-transition-name={'title-' + project.slug}>
+      <svelte:element
+         this={titleTag}
+         class="card__title"
+         style:view-transition-name={'title-' + project.slug}
+      >
          {project.title}
-      </h3>
+      </svelte:element>
       <p class="card__summary">{project.summary}</p>
       {#if project.metrics}
          <Metrics items={project.metrics} />

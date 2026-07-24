@@ -7,7 +7,7 @@
    const label = $derived(m.status_shipped({}, { locale: reactiveLocale() }));
 </script>
 
-<div class="stamp" aria-label={label} use:reveal>
+<div class="stamp" role="img" aria-label={label} use:reveal>
    <!-- eslint-disable-next-line svelte/no-at-html-tags -- trusted local asset -->
    {@html stamp}
 </div>
