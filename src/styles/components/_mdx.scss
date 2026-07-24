@@ -1,53 +1,80 @@
 @use '../variables' as *;
 
 // ---------------------------------------------------------------------------
-// MakerNote — margin aside, prefixed "n.b. —" (SPEC §1 voice rules)
+// MakerNote — a margin comment, not a callout card (MOCKUP §1.6 is explicit:
+// "never boxed"). Plain italic mono text inline with prose; only the "n.b."
+// prefix carries the accent color.
 // ---------------------------------------------------------------------------
 .maker-note {
    display: block;
    margin-block: $space-6;
-   padding-inline-start: $space-4;
-   border-left: $border-accent;
    font-family: $font-mono;
-   font-size: $font-size-body-md;
+   font-size: $font-size-small;
    font-style: italic;
-   line-height: $line-height-mono;
-   color: $color-copper;
+   line-height: 1.7;
+   color: $color-text-faint;
 }
 
 .maker-note__prefix {
    margin-inline-end: $space-1;
+   color: $color-copper;
 }
 
 // ---------------------------------------------------------------------------
-// AgentNotes — structured did/decided/verified block
+// AgentNotes — structured did/decided/verified block (MOCKUP §1.6), the
+// single most important component for the AI-native story: a walnut header
+// strip over a 3-column did/decided/verified grid. `AgentNotes.svelte`
+// renders a flat `dt,dd,dt,dd,dt,dd` sequence (see its markup); `grid-auto-
+// flow: column` with two explicit rows fills column-by-column instead of
+// row-by-row, landing each dt directly above its own dd.
 // ---------------------------------------------------------------------------
 .agent-notes {
    margin-block: $space-7;
-   padding: $space-6;
-   background: $color-bench;
+   overflow: hidden;
    border: $border-hairline;
    border-radius: $radius-md;
 }
 
 .agent-notes__title {
-   margin-bottom: $space-4;
-   font-size: $font-size-body-lg;
+   margin: 0;
+   padding: $space-2 $space-4;
+   background: $color-walnut;
+   font-family: $font-mono;
+   font-size: $font-size-nano;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-copper;
 }
 
 .agent-notes__grid {
    display: grid;
-   gap: $space-3;
+   grid-auto-flow: column;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(2, auto);
+   margin: 0;
+   background: $color-bench;
+
+   dt,
+   dd {
+      padding: $space-3;
+   }
+
+   dt:nth-child(n + 3),
+   dd:nth-child(n + 3) {
+      border-left: $border-hairline;
+   }
 
    dt {
+      margin: 0;
       font-family: $font-mono;
-      font-size: $font-size-label;
-      letter-spacing: $letter-spacing-label;
+      font-size: 0.5625rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: $color-text-faint;
    }
 
    dd {
+      margin: 0;
       color: $color-text-muted;
    }
 }
@@ -87,25 +114,43 @@
 }
 
 // ---------------------------------------------------------------------------
-// Quote — client testimonial pull-quote
+// Quote — client testimonial, a bordered card rather than the maker-note's
+// margin-comment treatment (MOCKUP §1.6, Components.dc.html 05/VOICE BLOCKS).
 // ---------------------------------------------------------------------------
 .quote {
+   display: flex;
+   flex-direction: column;
+   gap: $space-4;
+   max-width: 30rem;
    margin-block: $space-7;
-   padding-inline-start: $space-5;
-   border-left: $border-accent;
+   padding: $space-6;
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-lg;
+}
+
+.quote::before {
+   content: '\201C';
+   display: block;
+   height: 14px;
+   font-family: $font-display;
+   font-weight: $weight-bold;
+   font-size: 2.6rem;
+   line-height: 0.5;
+   color: $color-copper;
 }
 
 .quote__text {
+   margin: 0;
    font-family: $font-display;
-   font-size: $font-size-display-md;
-   line-height: $line-height-snug;
+   font-size: 1.2rem;
+   line-height: 1.45;
    color: $color-ivory;
 }
 
 .quote__author {
-   margin-top: $space-3;
    font-family: $font-mono;
-   font-size: $font-size-body-md;
+   font-size: $font-size-label;
    color: $color-text-faint;
 }
 
