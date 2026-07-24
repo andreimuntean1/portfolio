@@ -63,17 +63,13 @@
     />
     <div class="content">
       <p>
-        I'm a self-taught developer based in Bucharest, Romania. While I specialize in front-end development, I'm also
-        loving the challenges brought by fullstack development. My main frameworks are React and Vue, and I've been
-        growing increasingly passionate about Svelte too. WordPress hasn't escaped my attention either, as I've recently
-        gotten a solid grasp of it.
+        I'm a self-taught developer based in Bucharest. I started {years} years ago, during the pandemic, and I still get
+        the same kick out of turning a blank file into something people use every day.
         <br /><br />
-        I love building things for the web. There's something really exciting about starting from a blank file and turning
-        it into something meaningful. My journey began about {years} years ago, during the COVID-19 pandemic, and my enthusiasm
-        has only grown since.
+        Front-end is where I'm sharpest — React, Vue, Svelte, Next.js — but I'll take a project the whole way: database, admin
+        panel, emails, and an AI layer when it actually earns its place.
         <br /><br />
-        Feel free to check out my resume to see what other technologies I've worked with, or just reach out using the button
-        below. I'll do my best to get back to you as soon as possible!
+        If you've got something you want built properly, write to me. I answer fast.
       </p>
       <div class="buttons">
         <div class="contact">
