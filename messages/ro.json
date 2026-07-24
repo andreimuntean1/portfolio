@@ -35,6 +35,11 @@
    "home_step_1": "Descoperire. Stabilim scopul proiectului și cum arată «gata».",
    "home_step_2": "Construcție. Demo-uri săptămânale — agenții lucrează rapid, eu verific fiecare linie.",
    "home_step_3": "Predare. Documentație, teste și un cod care e al tău.",
+   "process_intro": "Iată cum arată, concret, o colaborare — de la primul mesaj până în ziua în care repository-ul e al tău.",
+   "process_step_discovery": "Descoperire. Vorbim despre obiectiv, constrângeri și ce trebuie să însemne «gata».",
+   "process_step_proposal": "Propunere. Scop, termen și preț, în scris — înainte de a scrie vreo linie de cod.",
+   "process_step_build": "Construcție. Demo-uri săptămânale, cod funcțional de fiecare dată, fără surprize la final.",
+   "process_step_handover": "Predare. Documentație, teste și o scurtă instruire — repository-ul e al tău, nu o cutie neagră.",
    "not_found_title": "Rătăcit prin atelier.",
    "not_found_cta": "Înapoi în atelier"
 }

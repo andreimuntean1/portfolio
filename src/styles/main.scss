@@ -4,9 +4,12 @@
 @use 'motion';
 @use 'components/card';
 @use 'components/case-study';
+@use 'components/contact';
 @use 'components/footer';
 @use 'components/hero';
 @use 'components/mdx';
 @use 'components/nav';
+@use 'components/page';
+@use 'components/process';
 @use 'components/work';
 @include atelier-font-faces;

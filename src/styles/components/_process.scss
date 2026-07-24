@@ -1,0 +1,50 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Engagement flow timeline (`/process`, MOCKUP §3.4) — a plain, static,
+// accessible ordered list today (Task 12). The numbered marker and
+// connecting rule between steps give Task 18 a shape to later animate as a
+// scroll-drawing sequence (signature motion moment #3); no motion is added
+// here, and none is needed yet since nothing here moves.
+// ---------------------------------------------------------------------------
+.timeline {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   gap: $space-6;
+   margin: $space-7 0;
+   padding: 0;
+   list-style: none;
+   counter-reset: timeline-step;
+}
+
+.timeline__step {
+   position: relative;
+   padding-inline-start: $space-7;
+   counter-increment: timeline-step;
+
+   &::before {
+      content: counter(timeline-step, decimal-leading-zero);
+      position: absolute;
+      inset-inline-start: 0;
+      font-family: $font-mono;
+      font-size: $font-size-label;
+      color: $color-copper;
+   }
+
+   &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      inset-inline-start: $space-2;
+      top: $space-5;
+      bottom: calc(-1 * #{$space-6});
+      width: 1px;
+      background: $color-seam;
+   }
+}
+
+.timeline__label {
+   margin: 0;
+   font-size: $font-size-body-lg;
+   color: $color-text-muted;
+}

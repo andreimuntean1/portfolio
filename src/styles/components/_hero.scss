@@ -47,10 +47,12 @@
    display: inline-flex;
    align-items: center;
    padding: $space-3 $space-5;
+   border: none;
    border-radius: $radius-pill;
    font-family: $font-body;
    font-weight: $weight-medium;
    font-size: $font-size-body-md;
+   cursor: pointer;
    transition:
       transform $duration-interactive $ease-spring,
       background $duration-interactive $ease-spring,

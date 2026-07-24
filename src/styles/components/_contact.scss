@@ -1,0 +1,66 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Contact form (`/contact`, MOCKUP §3.6) — markup-only skeleton (Task 12):
+// default/filled states styled here, field-level error/submitting/success/
+// failure states are Task 14's job once the server action exists.
+// ---------------------------------------------------------------------------
+.contact-form {
+   display: flex;
+   flex-direction: column;
+   gap: $space-5;
+   max-width: 32rem;
+   margin-top: $space-6;
+}
+
+.contact-form__field {
+   display: flex;
+   flex-direction: column;
+   gap: $space-2;
+}
+
+.contact-form__label {
+   font-family: $font-mono;
+   font-size: $font-size-label;
+   letter-spacing: $letter-spacing-label;
+   text-transform: uppercase;
+   color: $color-text-faint;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+   padding: $space-3 $space-4;
+   background: $color-bench;
+   border: $border-hairline;
+   border-radius: $radius-md;
+   color: $color-ivory;
+   font-family: $font-body;
+   font-size: $font-size-body-md;
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.contact-form__textarea {
+   min-height: 8rem;
+   resize: vertical;
+}
+
+.contact-form__fallback {
+   margin-top: $space-6;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+}
+
+.contact-form__fallback-link {
+   font-family: $font-mono;
+}
+
+.contact-form__response-time,
+.contact-form__language-note {
+   margin-top: $space-2;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+}

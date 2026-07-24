@@ -40,6 +40,8 @@ export default defineConfig({
             // routes owned by Tasks 10-12, which don't exist yet. That's the plan's
             // established pattern (see Task 9's brief), not a broken link, so a 404 from
             // exactly those paths shouldn't fail the build; anything else still does.
+            // Task 12's About page extends this the same way for `/resume` and `/cv`
+            // (SPEC §3.9): plain server redirects to a PDF, owned by a later task.
             handleHttpError: ({ path, message }) => {
                // TASK 10 TODO: the `work(\/[^/]+)?` sub-pattern below allows-lists
                // *any* single-segment `/work/<slug>` path, not just today's
@@ -52,7 +54,7 @@ export default defineConfig({
                // validation should come from SvelteKit's normal 404 handling (or an
                // `entries()` allowlist), not this regex.
                const isPendingRoute =
-                  /^\/(ro\/)?(work(\/[^/]+)?|process|about|contact|colophon)$/.test(path);
+                  /^\/(ro\/)?(work(\/[^/]+)?|process|about|contact|colophon|resume|cv)$/.test(path);
 
                if (isPendingRoute) {
                   return;

@@ -1,0 +1,77 @@
+@use '../variables' as *;
+
+// ---------------------------------------------------------------------------
+// Shared static-page wrapper — `/process`, `/about`, `/colophon`, `/contact`
+// and the root 404 all use this same single-column layout (Task 12). No
+// per-page modifier classes: nothing here differs by page yet, that's the
+// Task 19 design pass's job.
+// ---------------------------------------------------------------------------
+.page {
+   max-width: 42rem;
+   margin-inline: auto;
+   padding: $space-8 $space-5;
+}
+
+.page__heading {
+   margin-bottom: $space-5;
+   font-size: $font-size-display-lg;
+}
+
+.page__intro {
+   max-width: 40ch;
+   font-size: $font-size-body-lg;
+   color: $color-text-muted;
+}
+
+.page__body {
+   margin-block: $space-7;
+}
+
+.page__links {
+   display: flex;
+   flex-wrap: wrap;
+   gap: $space-4;
+   margin: 0 0 $space-6;
+   padding: 0;
+   list-style: none;
+}
+
+.page__link {
+   font-family: $font-mono;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+
+   &:hover {
+      color: $color-copper;
+   }
+
+   &:focus-visible {
+      outline: $border-accent;
+      outline-offset: $space-1;
+   }
+}
+
+.page__meta {
+   margin-top: $space-6;
+   font-size: $font-size-body-md;
+   color: $color-text-muted;
+}
+
+// ---------------------------------------------------------------------------
+// 404 — root `+error.svelte`, on-brand "lost in the workshop" copy (MOCKUP
+// §3.8). Composes its own nav/footer shell (see the component's own
+// comment), so only the main content needs styling here.
+// ---------------------------------------------------------------------------
+.not-found {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: $space-5;
+   max-width: 42rem;
+   margin-inline: auto;
+   padding: $space-8 $space-5;
+}
+
+.not-found__title {
+   font-size: $font-size-display-lg;
+}

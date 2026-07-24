@@ -35,6 +35,11 @@
    "home_step_1": "Discovery. We scope the build and agree on what done looks like.",
    "home_step_2": "Build. Weekly demos — agents move fast, I review every line.",
    "home_step_3": "Handover. Docs, tests, a codebase that's yours.",
+   "process_intro": "Here's what working together actually looks like, from the first message to the day the repo is yours.",
+   "process_step_discovery": "Discovery. We talk through the goal, the constraints, and what \"done\" needs to include.",
+   "process_step_proposal": "Proposal. A written scope, timeline, and price — before any code gets written.",
+   "process_step_build": "Build. Weekly demos, working code each time, no surprises at the end.",
+   "process_step_handover": "Handover. Docs, tests, and a short training session — the repo is yours, not a black box.",
    "not_found_title": "Lost in the workshop.",
    "not_found_cta": "Back to the workshop"
 }

@@ -37,3 +37,25 @@ a {
       scroll-behavior: auto;
    }
 }
+
+// ---------------------------------------------------------------------------
+// Visually hidden — cross-cutting utility (the contact form's honeypot
+// field, Task 12) with no natural home in a BEM component partial; kept here
+// rather than a dedicated utilities partial since this is currently the
+// only such utility in the project. Standard clip-path/absolute-positioning
+// idiom — content stays out of visual layout while remaining in the DOM;
+// pair with `tabindex="-1"`/`aria-hidden` at the call site for content that
+// must also be skipped by keyboard and assistive tech, not just sighted
+// users.
+// ---------------------------------------------------------------------------
+.visually-hidden {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   padding: 0;
+   margin: -1px;
+   overflow: hidden;
+   clip-path: inset(50%);
+   white-space: nowrap;
+   border: 0;
+}
