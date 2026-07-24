@@ -4,6 +4,7 @@
    import { getSiteConfig } from '$lib/content/site';
    import * as m from '$lib/paraglide/messages';
    import Availability from '$lib/components/Availability.svelte';
+   import Seo from '$lib/seo/Seo.svelte';
    import type { ActionData, SubmitFunction } from './$types';
 
    let { form }: { form: ActionData } = $props();
@@ -15,6 +16,15 @@
 
    const config = getSiteConfig();
    const responseTime = $derived(config.responseTime[locale]);
+
+   // No MDX frontmatter backs this page (unlike process/about/colophon), so
+   // its meta description is a plain locale-keyed literal here — same
+   // `{ en, ro }` shape `SiteConfig` uses for bilingual strings that aren't
+   // routed through paraglide messages.
+   const DESCRIPTION = {
+      en: 'Start a conversation about a project — availability and response time listed here, plus a direct email fallback.',
+      ro: 'Ia legătura despre un proiect — disponibilitatea și timpul de răspuns sunt afișate aici, plus un email de rezervă.',
+   } as const;
 
    // Stamped once on mount, not at module load — a lightweight time-based
    // spam-defense signal alongside the honeypot below: the server action
@@ -81,6 +91,8 @@
       return ERROR_MESSAGE[key]({}, { locale });
    }
 </script>
+
+<Seo title={m.nav_contact({}, { locale })} description={DESCRIPTION[locale]} pageId="contact" />
 
 <article class="page">
    <h1 class="page__heading">{m.nav_contact({}, { locale })}</h1>

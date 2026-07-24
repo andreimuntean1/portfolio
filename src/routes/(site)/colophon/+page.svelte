@@ -1,6 +1,7 @@
 <script lang="ts">
    import { reactiveLocale } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
+   import Seo from '$lib/seo/Seo.svelte';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -16,6 +17,12 @@
    // literal constant local to the one page that needs it.
    const REPO_URL = 'https://github.com/andreimuntean1/portfolio';
 </script>
+
+<Seo
+   title={m.footer_colophon({}, { locale })}
+   description={data.metadata.description}
+   pageId="colophon"
+/>
 
 <article class="page">
    <h1 class="page__heading">{m.footer_colophon({}, { locale })}</h1>

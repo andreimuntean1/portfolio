@@ -5,6 +5,8 @@
    import Availability from '$lib/components/Availability.svelte';
    import ProjectCard from '$lib/components/ProjectCard.svelte';
    import Quote from '$lib/components/mdx/Quote.svelte';
+   import Seo from '$lib/seo/Seo.svelte';
+   import { jsonLdPerson } from '$lib/seo/meta';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -23,6 +25,8 @@
       }),
    );
 </script>
+
+<Seo description={m.home_support({}, { locale })} pageId="home" jsonLd={[jsonLdPerson()]} />
 
 <section class="hero">
    <p class="hero__eyebrow">{m.home_eyebrow({}, { locale })}</p>

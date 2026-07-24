@@ -5,6 +5,8 @@
    import Metrics from '$lib/components/mdx/Metrics.svelte';
    import Quote from '$lib/components/mdx/Quote.svelte';
    import Stamp from '$lib/components/mdx/Stamp.svelte';
+   import Seo from '$lib/seo/Seo.svelte';
+   import { canonicalUrl, jsonLdBreadcrumbs, jsonLdCreativeWork } from '$lib/seo/meta';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -25,7 +27,34 @@
    const statusLabel = $derived(STATUS_MESSAGE[data.project.status]({}, { locale }));
 
    const contactHref = $derived(resolvedHref(localizeHref('/contact', { locale })));
+
+   // "Home"/"Work" breadcrumb labels: `nav_work` already exists as a
+   // paraglide message and is reused here, but there's no visible-UI "Home"
+   // label anywhere in the nav (SPEC never surfaces one), so introducing a
+   // paraglide message just for this machine-readable JSON-LD field would be
+   // scope creep — a plain locale-keyed literal instead, same `{ en, ro }`
+   // shape `SiteConfig` uses for bilingual strings outside paraglide.
+   const HOME_LABEL = { en: 'Home', ro: 'Acasă' } as const;
+
+   const caseStudyUrl = $derived(
+      canonicalUrl(localizeHref(`/work/${data.project.slug}`, { locale })),
+   );
+
+   const breadcrumbs = $derived(
+      jsonLdBreadcrumbs([
+         { name: HOME_LABEL[locale], url: canonicalUrl(localizeHref('/', { locale })) },
+         { name: m.nav_work({}, { locale }), url: canonicalUrl(localizeHref('/work', { locale })) },
+         { name: data.project.title, url: caseStudyUrl },
+      ]),
+   );
 </script>
+
+<Seo
+   title={data.project.title}
+   description={data.project.summary}
+   pageId={`work/${data.project.slug}`}
+   jsonLd={[jsonLdCreativeWork(data.project, caseStudyUrl), breadcrumbs]}
+/>
 
 <article class="case-study">
    <header class="case-study__header">

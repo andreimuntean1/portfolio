@@ -2,6 +2,7 @@
    import { reactiveLocale } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
    import ProjectCard from '$lib/components/ProjectCard.svelte';
+   import Seo from '$lib/seo/Seo.svelte';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -10,7 +11,18 @@
    // keeps every message below correct after a client-side language switch,
    // matching the pattern established by `SiteNav.svelte`/`+page.svelte` (`/`).
    const locale = $derived(reactiveLocale());
+
+   // No MDX frontmatter backs this index page (unlike process/about/colophon),
+   // so its meta description is a plain locale-keyed literal here — same
+   // `{ en, ro }` shape `SiteConfig` (`$lib/content/site`) uses for bilingual
+   // strings that aren't routed through paraglide messages.
+   const DESCRIPTION = {
+      en: 'Flagship case studies and shorter engagements — the stack, the role and the outcome for each project.',
+      ro: 'Studii de caz principale și proiecte mai mici — tehnologiile, rolul și rezultatul pentru fiecare.',
+   } as const;
 </script>
+
+<Seo title={m.nav_work({}, { locale })} description={DESCRIPTION[locale]} pageId="work" />
 
 <section class="work-flagships" aria-labelledby="work-flagships-heading">
    <h1 class="work-flagships__heading" id="work-flagships-heading">

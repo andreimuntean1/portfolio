@@ -2,6 +2,7 @@
    import { localizeHref } from '$lib/paraglide/runtime';
    import { reactiveLocale, resolvedHref } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
+   import Seo from '$lib/seo/Seo.svelte';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -13,6 +14,12 @@
 
    const contactHref = $derived(resolvedHref(localizeHref('/contact', { locale })));
 </script>
+
+<Seo
+   title={m.nav_process({}, { locale })}
+   description={data.metadata.description}
+   pageId="process"
+/>
 
 <article class="page">
    <h1 class="page__heading">{m.nav_process({}, { locale })}</h1>

@@ -2,6 +2,8 @@
    import { localizeHref } from '$lib/paraglide/runtime';
    import { reactiveLocale, resolvedHref } from '$lib/i18n';
    import * as m from '$lib/paraglide/messages';
+   import Seo from '$lib/seo/Seo.svelte';
+   import { jsonLdPerson } from '$lib/seo/meta';
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
@@ -21,6 +23,13 @@
    const resumeHref = $derived(resolvedHref(localizeHref('/resume', { locale })));
    const cvHref = $derived(resolvedHref(localizeHref('/cv', { locale })));
 </script>
+
+<Seo
+   title={m.nav_about({}, { locale })}
+   description={data.metadata.description}
+   pageId="about"
+   jsonLd={[jsonLdPerson()]}
+/>
 
 <article class="page">
    <h1 class="page__heading">{m.nav_about({}, { locale })}</h1>
