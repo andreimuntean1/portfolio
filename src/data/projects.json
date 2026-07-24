@@ -1,5 +1,15 @@
 [
   {
+    "title": "Dobricii",
+    "description": "Wedding platform with an AI seating assistant that rearranges tables on request, fuzzy-matched RSVPs with conflict resolution, and a full admin panel.",
+    "links": {
+      "demo": "https://dobricii.ro/demo/admin",
+      "demoLabel": "See admin",
+      "secondary": "https://dobricii.ro/demo",
+      "secondaryLabel": "See invitation"
+    }
+  },
+  {
     "title": "CarHeltau",
     "description": "Automotive automation tool featuring multi-step validation, dynamic PDF contract generation, and secure payment integration.",
     "links": {
