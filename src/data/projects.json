@@ -17,13 +17,6 @@
     }
   },
   {
-    "title": "Fota Industrial",
-    "description": "B2B presentation site for industrial equipment, built on Wix — catalogue structure, content setup and SEO.",
-    "links": {
-      "demo": "https://fotaindustrial.ro"
-    }
-  },
-  {
     "title": "Cursed Vision Films",
     "description": "Video architecture and speed work for a cinematography studio's Next.js site: database-backed media storage, a custom player for unlisted YouTube embeds with no ads or recommendations, and an admin panel where pasting a link publishes a video instantly.",
     "links": {
@@ -41,9 +34,9 @@
   },
   {
     "title": "Leida",
-    "description": "Landing page for a premium HoReCa equipment supplier, on a custom WordPress child theme with an interactive GeoJSON map of Romania plotting the company's cities. No longer in use.",
+    "description": "Landing page for a premium HoReCa equipment supplier, on a custom WordPress child theme with an interactive GeoJSON map of Romania plotting the company's cities.",
     "links": {
-      "demo": "https://dev.leida.ro"
+      "demo": "https://leida.ro"
     }
   },
   {

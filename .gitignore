@@ -1,4 +1,4 @@
-.DS_Store
+.*
 node_modules
 /build
 /.svelte-kit
@@ -8,5 +8,4 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-.prettierignore
-.prettierrc
+design-files
